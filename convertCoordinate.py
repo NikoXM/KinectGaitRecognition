@@ -167,3 +167,4 @@ class Convertor:
 if __name__ == '__main__':
 	convertor = Convertor(srcPath[2],dstPath[1])
 	convertor.data_process()
+	a = np.array([1,2])
