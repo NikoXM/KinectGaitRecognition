@@ -8,7 +8,6 @@ joint_descriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left
 			   'Hand-Right', 'Hand-Left', 'Spine', 'Hip-centro', 'Hip-Right', 'Hip-Left', 'Knee-Right', 'Knee-Left',
 			   'Ankle-Right', 'Ankle-Left', 'Foot-Right', 'Foot-Left']
 
-
 dstPath = ["/Users/niko/Documents/KinectGaitScripts/Data/ConvertedData",
 		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/convertedData"]
 # dstPath = "/Users/niko/Documents/KinectGaitScripts/Data/convertedData/"
@@ -26,6 +25,9 @@ class Convertor:
 		self.dstPath = dstPath
 		self.is_converted = False
 
+	def clear(self):
+		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+
 	def data_process(self):
 		personDirectorsPath = self.srcPath
 		personDirectors = self.listdir_nohidden(personDirectorsPath)
@@ -35,9 +37,10 @@ class Convertor:
 			for personFile in personFiles:
 				personFilePath = personDirectorPath + '/' + personFile
 				print personFilePath
+				self.clear()
 				self.read_data(personFilePath)
-				#self.convert()
-				self.testAngleArange()
+				self.convert()
+				#self.testAngleArange()
 				writePersonDirectorPath = self.dstPath +'/' + personDirector + '/'
 				if(os.path.exists(writePersonDirectorPath)):
 					self.write_data(writePersonDirectorPath+personFile)
@@ -63,7 +66,7 @@ class Convertor:
 		a1 = hip_center - shoulder_center
 		a2 = left_knee - hip_center
 		angle = self.calculateAngle(a1,a2)
-		self.imageShow(angle)
+		#self.imageShow(angle)
 
 	def calculateAngle(self,vector1,vector2):
 		dot_multi = vector1*vector2
@@ -83,14 +86,13 @@ class Convertor:
 		center = np.copy(data[self.gaitData.hip_center])
 		#the first step is to move the origin from kinect to body
 		for i in range(len(data)):
-				data[i] = data[i] - center
+			data[i] = data[i] - center
 		#the vertical axis keep unchange
 		#the second step is to twist x and z axis
 		x_new = data[self.gaitData.shoulder_left] - data[self.gaitData.shoulder_right]
 		modulo = np.sqrt(x_new[:,0]**2+x_new[:,1]**2+x_new[:,2]**2)
 		cos_theta = (x_new[:,0]/modulo)
 		sin_theta = (np.sqrt(1-cos_theta**2))
-
 		x = 0
 		z = 2
 		for i in range(len(data)):
@@ -147,12 +149,12 @@ class Convertor:
 			return self.points
 
 	def imageShow(self,points):
-		self.medfilter(points,1)
+		self.meanfilter(points,1)
 		xdata = np.arange(len(points))
 		plt.plot(xdata,points)
 		plt.show()
 
-	def medfilter(self,angle,size):
+	def meanfilter(self,angle,size):
 		if size%2 == 0:
 			print "size must be odd"
 			return

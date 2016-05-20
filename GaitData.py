@@ -25,5 +25,10 @@ class GaitData:
 		self.foot_left = 19
 
 		self.points = []
+		self.id = 1
 
+	def setId(self,id):
+		self.id = id
+	def getId(self):
+		return self.id
 
