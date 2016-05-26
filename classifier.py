@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from sklearn.neighbors import NearestNeighbors
+from sklearn.neighbors import DistanceMetric
 from sklearn.metrics.pairwise import manhattan_distances
 import warnings
 warnings.filterwarnings("ignore")
@@ -30,10 +30,15 @@ class Classifier:
 		self.testList = []
 		self.static_result = []
 		self.dynamic_result = []
+		self.fusion_result = []
+
+		self.static_dis = []
+		self.dynamic_dis = []
 
 	def data_process(self):
 		self.static_classify()
 		self.dynamic_classify()
+		self.fusion_classify()
 		self.show_result()
 
 	def clear(self):
@@ -71,6 +76,62 @@ class Classifier:
 			self.testStaticData.append(temp)
 		trainDataFile.close()
 		testDataFile.close()
+
+	def static_classify(self):
+		self.read_static_data()
+		#neigh = NearestNeighbors(n_neighbors = 2)
+		trainData = self.trainStaticData
+		testData = self.testStaticData
+		#neigh.fit(trainData)
+		#result = neigh.kneighbors(testData,return_distance=False)
+		result = self.knn_static(trainData,testData,2)
+		self.static_result = []
+		for r in result:
+			count_list = {}
+			for item in r:
+				i = self.trainStaticList[item]
+				if count_list.has_key(i):
+					count_list[i] = count_list[i] + 1
+				else:
+					count_list[i] = 1
+			maximun = 0
+			for i in count_list:
+				if count_list[i] > maximun:
+					maximun = count_list[i]
+					index = i
+			self.static_result.append(index)
+		print "static result:", self.static_result
+		#print self.static_result
+	def knn_static(self,trainData,testData,n):
+		result = []
+		for testPsn in range(len(testData)):
+			dis_list = []
+			mapper = {}
+			for trainPsn in range(len(trainData)):
+				dis = self.euclidian(testData[testPsn],trainData[trainPsn])
+				mapper[trainPsn] = dis
+				dis_list.append(dis)
+			dis_list = sorted(dis_list)
+			
+			temp = []
+			for i in dis_list[:n]:
+				for j in mapper:
+					if mapper[j] == i:
+						temp.append(j)
+			result.append(temp)
+		return result
+
+	def euclidian(self,xs,ys):
+		if len(xs) != len(ys):
+			print "dimension error"
+			return 0
+		x = np.array(xs)
+		y = np.array(ys)
+		dim = len(xs)
+		dif = x-y
+		for i in range(dim):
+			dis = np.sqrt(sum((x-y)**2))
+		return dis
 
 	def read_dynamic_data(self):
 		trainPath = self.trainDynamicPath
@@ -125,8 +186,8 @@ class Classifier:
 					self.testDynamicList.append(d[len(d)-1].replace('\n',''))
 				del d[len(d)-1]
 				temp = []
-				for i in range(len(d)):
-					temp.append(float(d[i]))
+				for j in range(len(d)):
+					temp.append(float(d[j]))
 				testLists.append(temp)
 			testDynamicData.append(testLists)
 
@@ -148,31 +209,6 @@ class Classifier:
 		#self.testDynamicData = testDynamicData
 		self.trainDynamicData = [[r[col] for r in trainDynamicData] for col in range(len(trainDynamicData[0]))] 
 		self.testDynamicData = [[r[col] for r in testDynamicData] for col in range(len(testDynamicData[0]))]
-		# print self.testDynamicData
-
-	def static_classify(self):
-		self.read_static_data()
-		neigh = NearestNeighbors(n_neighbors = 2)
-		trainData = self.trainStaticData
-		testData = self.testStaticData
-		neigh.fit(trainData)
-		result = neigh.kneighbors(testData,return_distance=False)
-		self.static_result = []
-		for r in result:
-			count_list = {}
-			for item in r:
-				i = self.trainStaticList[item]
-				if count_list.has_key(i):
-					count_list[i] = count_list[i] + 1
-				else:
-					count_list[i] = 1
-			maximun = 0
-			for i in count_list:
-				if count_list[i] > maximun:
-					maximun = count_list[i]
-					index = i
-			self.static_result.append(index)
-		#print self.static_result
 
 	def dynamic_classify(self):
 		self.read_dynamic_data()
@@ -192,10 +228,10 @@ class Classifier:
 		#neigh.fit(trainData)
 		#result = neigh.kneighbors(testData,return_distance = False)
 		#result = []
-		result = self.knn_dynamic(trainData,testData)
+		result = self.knn_dynamic(trainData,testData,2)
 		self.dynamic_result = []
 		print result
-		print len(result)
+		
 		for r in result:
 			count_list = {}
 			for item in r:
@@ -212,42 +248,128 @@ class Classifier:
 			self.dynamic_result.append(index)
 		#print len(self.result)
 		# print self.dynamic_result
+		print "dynamic result:",self.dynamic_result
 
-	def knn_dynamic(self,trainData,testData):
-		x = np.arange(30)
-		print len(trainData)
-		print len(testData)
-		for testPsn in testData:
-			dis = 0
-			for trainPsn in trainData:
-				dis += self.dtw(testPsn,trainPsn)
-			print dis
-		return []
-	# 	for test in testData:
-	# 		dis_list = []
-	# 		dis = 0
-	# 		for train in trainData:
+	def knn_dynamic(self,trainData,testData,n):
+		result = []
+		for testPsn in range(len(testData)):
+			dis_list = []
+			mapper = {}
+			for trainPsn in range(len(trainData)):
+				dis = self.dtw(testData[testPsn],trainData[trainPsn])
+				mapper[trainPsn] = dis
+				dis_list.append(dis)
+			dis_list = sorted(dis_list)
+			
+			temp = []
+			for i in dis_list[:n]:
+				for j in mapper:
+					if mapper[j] == i:
+						temp.append(j)
+			result.append(temp)
+		return result
+
+	def fusion_classify(self):
+		self.read_static_data()
+		self.read_dynamic_data()
+		#neigh = NearestNeighbors(n_neighbors = 2)
+		trainStaticData = self.trainStaticData
+		testStaticData = self.testStaticData
+		trainDynamicData = np.array(self.trainDynamicData)
+		trainDynamicData = trainDynamicData.reshape(trainDynamicData.shape[0],-1)
+		testDynamicData = np.array(self.testDynamicData)
+		testDynamicData = testDynamicData.reshape(testDynamicData.shape[0], -1)
+		#neigh.fit(trainData)
+		#result = neigh.kneighbors(testData,return_distance=False)
+		result = self.knn_fusion(trainDynamicData,testDynamicData,trainStaticData,testStaticData,2)
+		self.fusion_result = []
+		for r in result:
+			count_list = {}
+			for item in r:
+				i = self.trainStaticList[item]
+				if count_list.has_key(i):
+					count_list[i] = count_list[i] + 1
+				else:
+					count_list[i] = 1
+			maximun = 0
+			for i in count_list:
+				if count_list[i] > maximun:
+					maximun = count_list[i]
+					index = i
+			self.fusion_result.append(index)
+		print "fusion result:", self.fusion_result
+
+	def knn_fusion(self,trainDynamicData,testDynamicData,trainStaticData,testStaticData,n):
+		result = []
+		train_num = len(trainDynamicData)
+		test_num = len(testDynamicData)
+
+		dynamic_list = []
+		static_list = []
+		for testPsn in range(test_num):
+			d_list = []
+			s_list = []
+			for trainPsn in range(train_num):
+				dynamic_dis = self.dtw(testDynamicData[testPsn],trainDynamicData[trainPsn])
+				static_dis = self.euclidian(testStaticData[testPsn],trainStaticData[trainPsn])
+				# mapper[trainPsn] = dis
+				d_list.append(dynamic_dis)
+				s_list.append(static_dis)
+			dynamic_list.append(d_list)
+			static_list.append(s_list)
+		d_max = max([max(i) for i in dynamic_list])
+		d_min = min([min(i) for i in dynamic_list])
+		s_max = max([max(i) for i in static_list])
+		s_min = min([min(i) for i in static_list])
+
+		d_data = np.array(dynamic_list)
+		s_data = np.array(static_list)
+		d_data = d_data/(d_max-d_min)
+		s_data = s_data/(s_max-s_min)
+
+		dis = (d_data + s_data).tolist()
+
+		for psn in dis:
+			mapper = {}
+			temp_list = psn
+			for i in range(len(psn)):
+				mapper[i] = psn[i]
+			temp_list = sorted(temp_list)
+			temp_buffer = []
+			for i in temp_list[:n]:
+				for j in mapper:
+					if mapper[j] == i:
+						temp_buffer.append(j)
+			result.append(temp_buffer)
+		return result
 
 	def show_result(self):
 		# print self.trainList
 		idlist = []
+#dynamic success number:
 		count = 0
 		for i in range(len(self.dynamic_result)):
 			if self.dynamic_result[i] == self.testDynamicList[i]:
 				count += 1
 		print "dynamic success:"
 		print count
+#static success number:
 		count = 0
 		for i in range(len(self.static_result)):
 			if self.static_result[i] == self.testStaticList[i]:
 				count += 1
 		print "static success:"
 		print count
+#fusion success number:
+		count = 0
+		for i in range(len(self.fusion_result)):
+			if self.fusion_result[i] == self.testStaticList[i]:
+				count += 1
+		print "fusion success:"
+		print count
 
 	def dtw(self,xs,ys,count=[0]):
-		if(len(xs) == 10):
-			return 0
-		print count[0]
+		print "dtw:",count[0]
 		count[0] += 1
 		xs = xs.reshape(-1,7)
 		ys = ys.reshape(-1,7)

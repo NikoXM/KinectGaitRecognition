@@ -5,22 +5,12 @@ import random as rd
 import numpy as np
 import GaitData as gd
 
-dstPath = ["/Users/niko/Documents/KinectGaitScripts/Data/FilteredGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/FilteredGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/trainGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/testGaitDataset",]
-# dstPath = "/Users/niko/Documents/KinectGaitScripts/Data/convertedData/"
-srcPath = ["/Users/niko/Documents/KinectGaitScripts/Data/FilteredGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/Data/RawGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/RawGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/FilteredGaitDataset"]
-
 joint_descriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left', 'Elbow-Right', 'Elbow-Left', 'Wrist-Right', 'Wrist-Left',
 			   'Hand-Right', 'Hand-Left', 'Spine', 'Hip-centro', 'Hip-Right', 'Hip-Left', 'Knee-Right', 'Knee-Left',
 			   'Ankle-Right', 'Ankle-Left', 'Foot-Right', 'Foot-Left']
 
 class RandomSelect:
-	def __init__(self,srcPath,trainPath,testPath,p):
+	def __init__(self,srcPath,trainPath,testPath,p=0.7):
 		self.gaitData = gd.GaitData()
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 		self.trainPath = trainPath
@@ -29,6 +19,25 @@ class RandomSelect:
 		self.trainMatric = []
 		self.testMatric = []
 		self.p = p
+
+		temp = self.trainPath.split('/')
+		path = self.trainPath.replace(temp[len(temp)-1],'')
+
+		if(os.path.exists(path)):
+			shutil.rmtree(path)
+			os.mkdir(path)
+		else:
+			os.mkdir(path)
+		os.mkdir(self.trainPath)
+
+		temp = self.testPath.split('/')
+		path = self.testPath.replace(temp[len(temp)-1],'')
+		if(os.path.exists(path)):
+			shutil.rmtree(path)
+			os.mkdir(path)
+		else:
+			os.mkdir(path)
+		os.mkdir(self.testPath)
 
 	def listdir_nohidden(self,path):
 		for f in os.listdir(path):
@@ -75,11 +84,12 @@ class RandomSelect:
 		personDirectors = self.listdir_nohidden(personDirectorsPath)
 		for personDirector in personDirectors:
 			personDirectorPath = personDirectorsPath + '/' + personDirector
+			if not os.path.isdir(personDirectorPath):
+				continue
+			print "Random Select:",personDirector
 			personFiles = self.listdir_nohidden(personDirectorPath)
-			
 			trainPoint = 0
 			testPoint = 0
-			
 			tempList = []
 			for personFile in personFiles:
 				tempList.append(personFile)
@@ -89,12 +99,8 @@ class RandomSelect:
 			testFiles = list(set(personFiles).difference(set(trainFiles)))
 			#train
 			writePersonDirectorPath = self.trainPath +'/' + personDirector + '/'
-			if(os.path.exists(writePersonDirectorPath)):
-				shutil.rmtree(writePersonDirectorPath)
-				os.mkdir(writePersonDirectorPath)
 			for personFile in trainFiles:
 				personFilePath = personDirectorPath + '/' + personFile
-				print "training:"+personFilePath
 				self.clear()
 				self.read_data(personFilePath)
 				#self.filter()
@@ -106,12 +112,8 @@ class RandomSelect:
 					self.write_data(writePersonDirectorPath+personFile)
 			#test
 			writePersonDirectorPath = self.testPath +'/' + personDirector + '/'
-			if(os.path.exists(writePersonDirectorPath)):
-				shutil.rmtree(writePersonDirectorPath)
-				os.mkdir(writePersonDirectorPath)
 			for personFile in testFiles:
 				personFilePath = personDirectorPath + '/' + personFile
-				print "testing:"+personFilePath
 				self.clear()
 				self.read_data(personFilePath)
 				#self.filter()
@@ -154,6 +156,17 @@ class RandomSelect:
 				point += str(points[limb][frame][2]) + '\n'
 				dstFile.write(point)
 		dstFile.close()
+
+srcPath = ["/Users/niko/Documents/KinectGaitScripts/Data/FilteredGaitDataset",
+		"/Users/niko/Documents/KinectGaitScripts/Data/RawGaitDataset",
+		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/RawGaitDataset",
+		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/FilteredGaitDataset"]
+
+dstPath = ["/Users/niko/Documents/KinectGaitScripts/Data/FilteredGaitDataset",
+		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/FilteredGaitDataset",
+		"/Users/niko/Documents/KinectGaitScripts/TrainDataset/TrainGaitDataset",
+		"/Users/niko/Documents/KinectGaitScripts/TestDataset/TestGaitDataset",]
+# dstPath = "/Users/niko/Documents/KinectGaitScripts/Data/convertedData/"
 
 if __name__ == '__main__':
 	rs = RandomSelect(srcPath[3],trainPath = dstPath[2],testPath = dstPath[3],p=0.7)

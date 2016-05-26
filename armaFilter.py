@@ -1,5 +1,6 @@
 import os
 import string
+import shutil
 import numpy as np
 import GaitData as gd
 
@@ -17,12 +18,17 @@ joint_descriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left
 			   'Ankle-Right', 'Ankle-Left', 'Foot-Right', 'Foot-Left']
 
 class Filter:
-	def __init__(self,srcPath,dstPath,n):
+	def __init__(self,srcPath,dstPath,n = 10):
 		self.gaitData = gd.GaitData()
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 		self.srcPath = srcPath
 		self.dstPath = dstPath
 		self.n = n
+		if(os.path.exists(self.dstPath)):
+			shutil.rmtree(self.dstPath)
+			os.mkdir(self.dstPath)
+		else:
+			os.mkdir(self.dstPath)
 
 	def clear(self):
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
@@ -52,11 +58,11 @@ class Filter:
 		personDirectorsPath = self.srcPath
 		personDirectors = self.listdir_nohidden(personDirectorsPath)
 		for personDirector in personDirectors:
+			print "Filtering:",personDirector
 			personDirectorPath = personDirectorsPath + '/' + personDirector
 			personFiles = self.listdir_nohidden(personDirectorPath)
 			for personFile in personFiles:
 				personFilePath = personDirectorPath + '/' + personFile
-				print personFilePath
 				self.clear()
 				self.read_data(personFilePath)
 				self.armaFilter()
