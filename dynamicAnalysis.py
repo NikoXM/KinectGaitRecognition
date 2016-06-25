@@ -5,7 +5,7 @@ import string
 import shutil
 import numpy as np
 import GaitData as gd
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from scipy.integrate import trapz
 from scipy.optimize import curve_fit
 import random as rd
@@ -55,15 +55,14 @@ def poly_func(x, a0, a1, a2, a3, a4, a5, a6, a7):
 class DynamicAnalyzer:
     'this class is to fitting the curve of walk'
 
-    def __init__(self, srcTrainPath, dstTrainPath,srcTestPath,dstTestPath,number=1):
+    def __init__(self,path,angle_list={}):
         self.gaitData = gd.GaitData()
         self.points = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
-        self.srcTrainPath = srcTrainPath
-        self.dstTrainPath = dstTrainPath
-        self.srcTestPath = srcTestPath
-        self.dstTestPath = dstTestPath
+        self.srcTrainPath = path + "/TrainDataset/TrainGaitDataset"
+        self.dstTrainPath = path + "/TrainDataset/TrainDynamicDataset"
+        self.srcTestPath = path + "/TestDataset/TestGaitDataset"
+        self.dstTestPath = path + "/TestDataset/TestDynamicDataset"
         self.ndfit = 1
-        self.number = number
         # self.wekaFile = open(wekaFilePath, 'w')
         # self.wekaFile.write("@relation fourier_fitting\n")
         # self.trainData = open(self.dstPath + '/dynamic.txt', 'w')
@@ -75,12 +74,22 @@ class DynamicAnalyzer:
         self.frequecy = []
         self.N = None
         self.angles_map = {
-                    "1":[self.gaitData.knee_left,self.gaitData.hip_center],
-                    "2":[self.gaitData.knee_right,self.gaitData.hip_center],
-                    "3":[self.gaitData.ankle_left,self.gaitData.knee_left],
-                    "4":[self.gaitData.ankle_right,self.gaitData.knee_right],
-                    #"5":[self.gaitData.ankle_right,self.gaitData.knee_right]
-                    }
+                "srkrar":[self.gaitData.shoulder_right,self.gaitData.knee_right,self.gaitData.ankle_right],
+                "srklal":[self.gaitData.shoulder_right,self.gaitData.knee_left,self.gaitData.ankle_left],
+                "slkrar":[self.gaitData.shoulder_left,self.gaitData.knee_right,self.gaitData.ankle_right],
+                "slklal":[self.gaitData.shoulder_left,self.gaitData.knee_left,self.gaitData.ankle_left],
+                "hrklal":[self.gaitData.hip_right,self.gaitData.knee_left,self.gaitData.ankle_left],
+                "hlkrar":[self.gaitData.hip_left,self.gaitData.knee_right,self.gaitData.ankle_right],
+                "krhlal":[self.gaitData.knee_right,self.gaitData.hip_left,self.gaitData.ankle_left],
+                "klhrar":[self.gaitData.knee_left,self.gaitData.hip_right,self.gaitData.ankle_right],
+                "arhlkl":[self.gaitData.ankle_right,self.gaitData.hip_left,self.gaitData.knee_left],
+                "alhrkr":[self.gaitData.ankle_left,self.gaitData.hip_right,self.gaitData.knee_right],
+                "hcsckl":[self.gaitData.hip_center,self.gaitData.shoulder_center,self.gaitData.knee_left],
+                "hcsckr":[self.gaitData.hip_center,self.gaitData.shoulder_center,self.gaitData.knee_right],
+                }
+
+        self.angle_list = angle_list
+
         if(os.path.exists(self.dstTrainPath)):
             shutil.rmtree(self.dstTrainPath)
             os.mkdir(self.dstTrainPath)
@@ -239,8 +248,8 @@ class DynamicAnalyzer:
 
     def calculateAngle(self, joint):
         data = np.array(self.points)
-        a1 = data[self.gaitData.hip_center] - data[self.gaitData.shoulder_center]
-        a2 = data[joint[0]] - data[joint[1]]
+        a1 = data[joint[1]] - data[joint[0]]
+        a2 = data[joint[2]] - data[joint[0]]
         modulo = self.getModulo(a1) * self.getModulo(a2)
         dot_multi = a1 * a2
         dot_multi = dot_multi[:, 0] + dot_multi[:, 1] + dot_multi[:, 2]
@@ -317,7 +326,7 @@ class DynamicAnalyzer:
     # print periods
 
     def drawAngleCurve(self,dstPath):
-        for m in self.angles_map:
+        for m in self.angle_list:
             angle = self.calculateAngle(self.angles_map[m])
             self.meanfilter(angle,17)
             periods = self.extractPeriods(angle)
@@ -335,7 +344,7 @@ class DynamicAnalyzer:
             if len(periods) == 0:
                 trainData = open(dstPath+'/'+str(m)+".txt",'a')
                 for i in range(7):
-                    self.trainData.write("0.,")
+                    trainData.write("0.,")
                 trainData.write(str(self.gaitData.getId()) + '\n')
                 trainData.close()
                 continue
@@ -358,14 +367,10 @@ class DynamicAnalyzer:
 
             popt, pcov = self.curve_fitting(x, np.array(period))
             # ydata = self.apply_function(x,popt)
-            # plt.plot(x,np.array(p))
+            # # plt.plot(x,np.array(p))
             # plt.plot(x,ydata)
+            # plt.plot(x,period)
 
-            # print popt
-            # xtest = np.arange(len(period))
-            # ytest = poly_func(xtest,0,popt[1],popt[2],popt[3],popt[4],popt[5],popt[6],popt[7])
-            # plt.plot(xtest,period)
-            # plt.plot(xtest,ytest)
             # write fit parameter(except a0) to classfy
             trainData = open(dstPath+'/'+str(m)+".txt",'a')
             for i in range(1, len(popt)):
@@ -391,12 +396,12 @@ class DynamicAnalyzer:
             # self.wekaFile.write(str(self.gaitData.getId())+'\n')
 
             # only for test
-            matlabFilePath = "/Users/niko/Documents/KinectGaitScripts/TestOnlyData/MatlabDataset/1.txt"
-            matlabFile = open(matlabFilePath, 'w')
-            for i in range(len(angle) - 1):
-                matlabFile.write(str(angle[i]) + ' ')
-            matlabFile.write(str(angle[len(angle) - 1]))
-            matlabFile.close()
+            # matlabFilePath = "/Users/niko/Documents/KinectGaitScripts/TestOnlyData/MatlabDataset/1.txt"
+            # matlabFile = open(matlabFilePath, 'w')
+            # for i in range(len(angle) - 1):
+            #     matlabFile.write(str(angle[i]) + ' ')
+            # matlabFile.write(str(angle[len(angle) - 1]))
+            # matlabFile.close()
         #plt.show()
 
     # the speed doesn't work
@@ -485,21 +490,9 @@ class DynamicAnalyzer:
         self.N = N
         return A, P
 
-
-# The data path contain converted data
-srcPath = ["/Users/niko/Documents/KinectGaitScripts/Data/FilteredGaitDataset",
-           "/Users/niko/Documents/KinectGaitScripts/Data/RawGaitDataset",
-           "/Users/niko/Documents/KinectGaitScripts/TestOnlyData/ConvertedData",
-           "/Users/niko/Documents/KinectGaitScripts/TestOnlyData/FilteredGaitDataset",
-           "/Users/niko/Documents/KinectGaitScripts/TrainDataset/TrainGaitDataset",
-           "/Users/niko/Documents/KinectGaitScripts/TestDataset/TestGaitDataset"]
-
-dstPath = ["/Users/niko/Documents/KinectGaitScripts/Data/ConvertedData",
-           "/Users/niko/Documents/KinectGaitScripts/TestOnlyData/ConvertedData",
-           "/Users/niko/Documents/KinectGaitScripts/TrainDataset/TrainDynamicDataset",
-           "/Users/niko/Documents/KinectGaitScripts/TestDataset/TestDynamicDataset"]
-
 if __name__ == "__main__":
     # train
-    d = DynamicAnalyzer(srcPath[4], dstPath[2],srcPath[5], dstPath[3])
+    lists = ['srkrar','srklal']
+    homedir = os.getcwd()
+    d = DynamicAnalyzer(homedir,lists)
     d.data_process()

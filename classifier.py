@@ -1,24 +1,17 @@
 import os
 import numpy as np
-from sklearn.neighbors import DistanceMetric
-from sklearn.metrics.pairwise import manhattan_distances
 import warnings
 warnings.filterwarnings("ignore")
-
-srcPath = ["/Users/niko/Documents/KinectGaitScripts/TrainDataset/trainStaticDataset",
-			"/Users/niko/Documents/KinectGaitScripts/TestDataset/testStaticDataset",
-			"/Users/niko/Documents/KinectGaitScripts/TrainDataset/trainDynamicDataset",
-			"/Users/niko/Documents/KinectGaitScripts/TestDataset/testDynamicDataset"]
 
 def poly_func(x, a1, a2, a3, a4, a5, a6, a7):
     return a7 * x ** 7 + a6 * x ** 6 + a5 * x ** 5 + a4 * x ** 4 + a3 * x ** 3 + a2 * x ** 2 + a1 * x
 
 class Classifier:
-	def __init__(self):
-		self.trainStaticPath = srcPath[0]
-		self.testStaticPath = srcPath[1]
-		self.trainDynamicPath = srcPath[2]
-		self.testDynamicPath = srcPath[3]
+	def __init__(self,path="/Users/niko/Documents/KinectGaitRecognition"):
+		self.trainStaticPath = path+"/TrainDataset/TrainStaticDataset"
+		self.testStaticPath = path+"/TestDataset/TestStaticDataset"
+		self.trainDynamicPath = path+"/TrainDataset/TrainDynamicDataset"
+		self.testDynamicPath = path+"/TestDataset/TestDynamicDataset"
 		self.trainStaticData = []
 		self.testStaticData = []
 		self.trainDynamicData = []
@@ -100,7 +93,12 @@ class Classifier:
 					maximun = count_list[i]
 					index = i
 			self.static_result.append(index)
-		print "static result:", self.static_result
+		# print "static result:", self.static_result
+		count = 0
+		for i in range(len(self.static_result)):
+			if self.static_result[i] == self.testStaticList[i]:
+				count += 1
+		return count,float(count)/len(self.testStaticList),len(self.testStaticList),self.static_result
 		#print self.static_result
 	def knn_static(self,trainData,testData,n):
 		result = []
@@ -140,13 +138,13 @@ class Classifier:
 		testDataFiles = self.listdir_nohidden(testPath)
 
 		trainFiles = []
-		for file in trainDataFiles:
-			trainFiles.append(file)
-		sorted(trainFiles,key = lambda x: int(x.replace(".txt",'')))
+		for files in trainDataFiles:
+			trainFiles.append(files)
+		# sorted(trainFiles,key = lambda x: int(x.replace(".txt",'')))
 		testFiles = []
-		for file in testDataFiles:
-			testFiles.append(file)
-		sorted(testFiles,key = lambda x: int(x.replace(".txt",'')))
+		for files in testDataFiles:
+			testFiles.append(files)
+		# sorted(testFiles,key = lambda x: int(x.replace(".txt",'')))
 
 		# temp = open(self.trainDynamicPath + '/' + trainFiles[0])
 		# length = len(temp.readlines())
@@ -230,7 +228,6 @@ class Classifier:
 		#result = []
 		result = self.knn_dynamic(trainData,testData,2)
 		self.dynamic_result = []
-		print result
 		
 		for r in result:
 			count_list = {}
@@ -248,7 +245,12 @@ class Classifier:
 			self.dynamic_result.append(index)
 		#print len(self.result)
 		# print self.dynamic_result
-		print "dynamic result:",self.dynamic_result
+		# print "dynamic result:",self.dynamic_result
+		count = 0
+		for i in range(len(self.dynamic_result)):
+			if self.dynamic_result[i] == self.testDynamicList[i]:
+				count += 1
+		return count,float(count)/len(self.testDynamicList),len(self.testDynamicList),self.dynamic_result
 
 	def knn_dynamic(self,trainData,testData,n):
 		result = []
@@ -297,7 +299,12 @@ class Classifier:
 					maximun = count_list[i]
 					index = i
 			self.fusion_result.append(index)
-		print "fusion result:", self.fusion_result
+		# print "fusion result:", self.fusion_result
+		count = 0
+		for i in range(len(self.fusion_result)):
+			if self.fusion_result[i] == self.testStaticList[i]:
+				count += 1
+		return count,float(count)/len(self.testStaticList),len(self.testStaticList),self.fusion_result
 
 	def knn_fusion(self,trainDynamicData,testDynamicData,trainStaticData,testStaticData,n):
 		result = []
@@ -344,8 +351,6 @@ class Classifier:
 		return result
 
 	def show_result(self):
-		# print self.trainList
-		idlist = []
 #dynamic success number:
 		count = 0
 		for i in range(len(self.dynamic_result)):
@@ -369,7 +374,7 @@ class Classifier:
 		print count
 
 	def dtw(self,xs,ys,count=[0]):
-		print "dtw:",count[0]
+		# print "dtw:",count[0]
 		count[0] += 1
 		xs = xs.reshape(-1,7)
 		ys = ys.reshape(-1,7)
@@ -386,7 +391,7 @@ class Classifier:
 		# print x.shape
 		# print y.shape
 
-		dist = manhattan_distances
+		#dist = manhattan_distances
 	 	r, c = len(x), len(y)
 		D0 = np.zeros((r + 1, c + 1))
 		D0[0, 1:] = np.inf
@@ -394,7 +399,8 @@ class Classifier:
 		D1 = D0[1:, 1:]
 		for i in range(r):
 			for j in range(c):
-				D1[i, j] = dist([x[i]], [y[j]])
+				#print "x[i]:",x[i],"y[i]",y[i]
+				D1[i, j] = abs(x[i] - y[j])
 		C = D1.copy()
 		for i in range(r):
 			for j in range(c):

@@ -6,20 +6,27 @@ import shutil
 import numpy as np
 import GaitData as gd
 
-limb_descriptors = ['neck_len','rshoulder_len','lshoulder_len','rarm_len','larm_len','rforearm_len','lforearm_len',
-					'rhand_len','lhand_len','upper_spine','lower_spine','rhip_len','lhip_len','rthigh_len','lthigh_len',
-					'rcalf_len','lcalf_len','rfoot_len','lfoot_len','height']
+limb_descriptors  = ['neck','rshoulder','lshoulder','rarm','larm','rfarm','lfarm',
+					'rhand','lhand','uspine','lspine','rhip','lhip','rthigh','lthigh',
+					'rcalf','lcalf','rfoot','lfoot','height']
 
 class StaticAnalyzer:
-	def __init__(self,srcTrainPath,dstTrainPath,srcTestPath,dstTestPath):
+	def __init__(self,path,limb_list):
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 		self.datas = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 		self.gaitData = gd.GaitData()
-		self.srcTrainPath = srcTrainPath
-		self.dstTrainPath = dstTrainPath
-		self.srcTestPath = srcTestPath
-		self.dstTestPath = dstTestPath
+		self.srcTrainPath = path+"/TrainDataset/TrainGaitDataset"
+		self.dstTrainPath = path+"/TrainDataset/TrainStaticDataset"
+		self.srcTestPath = path+"/TestDataset/TestGaitDataset"
+		self.dstTestPath = path+"/TestDataset/TestStaticDataset"
 
+		self.list_map = {}
+		for l in limb_descriptors:
+			self.list_map[l] = 0
+
+		for l in limb_list:
+			self.list_map[l] = 1
+		print self.list_map
 		# self.fileDistance = open(wekaPath+"/static.arff",'w')
 		#self.fileDistance.write("@relation static-identification\n")
 		#self.fileDistance.write("@attribute neck_len numeric\n")
@@ -60,6 +67,7 @@ class StaticAnalyzer:
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 
 	def read_data(self,personFilePath):
+		d_size = len(limb_descriptors)
 		person = open(personFilePath)
 		personData = person.readlines()
 		if len(personData) == 0:
@@ -67,9 +75,9 @@ class StaticAnalyzer:
 			print personFilePath
 			return
 		length = len(personData)
-		for item in range(0,length/20):
-			for seg in range(0,20):
-				temp = personData[item*20 + seg].split(";")
+		for item in range(0,length/d_size):
+			for seg in range(0,d_size):
+				temp = personData[item*d_size + seg].split(";")
 				point = [string.atof(temp[1]),string.atof(temp[2]),string.atof(temp[3].replace("\n",''))]
 				self.points[seg].append(point)
 		person.close()
@@ -77,21 +85,22 @@ class StaticAnalyzer:
 	#this function is to caculate mean and std of raw data
 	#and then filter raw data and write
 	def filter_mean_std(self):
-		means = np.zeros(20)
-		std = np.zeros(20)
+		d_size = len(limb_descriptors)
+		means = np.zeros(d_size)
+		std = np.zeros(d_size)
 		# pre-caculate mean and std of every limb
 		lens = len(self.datas[0])
-		for i in range(20):
+		for i in range(d_size):
 			means[i] = self.datas[i].sum()/lens
 			std[i] = np.std(self.datas[i])
-		for i in range(20):
+		for i in range(d_size):
 			j = 0
 			while(j < len(self.datas[i])):
 				if (self.datas[i][j] < means[i] - 2*std[i]) or (self.datas[i][j] > means[i] + 2*std[i]):
-					for k in range(20):
+					for k in range(d_size):
 						self.datas[k] = np.delete(self.datas[k],j,0)
 				j += 1
-		for i in range(0,20):
+		for i in range(0,d_size):
 			self.trainData.write(str(self.datas[i].sum()/lens)+',')
 			#self.fileDistance.write(str(self.datas[i].sum()/lens)+',')
 		self.trainData.write(str(self.gaitData.getId())+'\n')
@@ -143,9 +152,10 @@ class StaticAnalyzer:
 		length = len(self.datas[0])
 		for line in range(0,length):
 			for i in range(0,20):
-				dstFile.write(limb_descriptors[i]+',')
-				dstFile.write(str(self.datas[i][line])+'\n')
-			dstFile.write('\n')
+				if self.list_map[limb_descriptors[i]] == 1:
+					dstFile.write(limb_descriptors[i]+',')
+					dstFile.write(str(self.datas[i][line])+'\n')
+			# dstFile.write('\n')
 		dstFile.close()
 
 	def calculateLength(self):
@@ -231,36 +241,8 @@ class StaticAnalyzer:
 		height = neck + upper_spine + lower_spine + (right_hip + left_hip)/2 + (right_thigh+left_thigh)/2 + (right_leg+left_leg)/2 + (right_foot+left_foot)/2
 		self.datas[19] = (neck + upper_spine + lower_spine + (right_hip + left_hip)/2 + (right_thigh+left_thigh)/2 + (right_leg+left_leg)/2 + (right_foot+left_foot)/2)#.tolist()
 
-#The data path contain converted data
-srcPath = [
-		#0
-		"/Users/niko/Documents/KinectGaitScripts/Data/FilteredGaitDataset",
-		#1
-		"/Users/niko/Documents/KinectGaitScripts/Data/RawGaitDataset",
-		#2
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/ConvertedData",
-		#3
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/FilteredGaitDataset",
-		#4
-		"/Users/niko/Documents/KinectGaitScripts/TrainDataset/TrainGaitDataset",
-		#5
-		"/Users/niko/Documents/KinectGaitScripts/TestDataset/TestGaitDataset"]
-
-dstPath = [
-		#0
-		"/Users/niko/Documents/KinectGaitScripts/Data/ConvertedDataset",
-		#1
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/ConvertedDataset",
-		#2
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/WekaDataset",
-		#3
-		"/Users/niko/Documents/KinectGaitScripts/TrainDataset/TrainStaticDataset",
-		#4
-		"/Users/niko/Documents/KinectGaitScripts/TestDataset/TestStaticDataset"]
-
 if __name__=="__main__":
 	#train data
-	sa = StaticAnalyzer(srcPath[4],dstPath[3],srcPath[5],dstPath[4])
-	#test data
-	#test_sa = StaticAnalyzer(srcPath[5],dstPath[4])
+	homedir = os.getcwd()
+	sa = StaticAnalyzer(homedir,limb_descriptors)
 	sa.data_process()

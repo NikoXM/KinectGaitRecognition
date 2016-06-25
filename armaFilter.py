@@ -4,27 +4,18 @@ import shutil
 import numpy as np
 import GaitData as gd
 
-
-dstPath = ["/Users/niko/Documents/KinectGaitScripts/Data/FilteredGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/FilteredGaitDataset"]
-# dstPath = "/Users/niko/Documents/KinectGaitScripts/Data/convertedData/"
-srcPath = ["/Users/niko/Documents/KinectGaitScripts/Data/FilteredGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/Data/RawGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/RawGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/FilteredGaitDataset"]
-
 joint_descriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left', 'Elbow-Right', 'Elbow-Left', 'Wrist-Right', 'Wrist-Left',
 			   'Hand-Right', 'Hand-Left', 'Spine', 'Hip-centro', 'Hip-Right', 'Hip-Left', 'Knee-Right', 'Knee-Left',
 			   'Ankle-Right', 'Ankle-Left', 'Foot-Right', 'Foot-Left']
 
 class Filter:
-	def __init__(self,srcPath,dstPath,n = 10):
+	def __init__(self,path="/Users/niko/Documents/KinectGaitRecognition",n = 10):
 		self.gaitData = gd.GaitData()
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
-		self.srcPath = srcPath
-		self.dstPath = dstPath
+		self.srcPath = path+"/RawGaitDataset"
+		self.dstPath = path+"/FilteredGaitDataset"
 		self.n = n
-		if(os.path.exists(self.dstPath)):
+		if os.path.exists(self.dstPath):
 			shutil.rmtree(self.dstPath)
 			os.mkdir(self.dstPath)
 		else:

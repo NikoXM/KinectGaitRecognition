@@ -10,16 +10,15 @@ joint_descriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left
 			   'Ankle-Right', 'Ankle-Left', 'Foot-Right', 'Foot-Left']
 
 class RandomSelect:
-	def __init__(self,srcPath,trainPath,testPath,p=0.7):
+	def __init__(self,path="/Users/niko/Documents/KinectGaitRecognition",p=0.7):
 		self.gaitData = gd.GaitData()
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
-		self.trainPath = trainPath
-		self.testPath = testPath
-		self.srcPath = srcPath
+		self.trainPath = path+"/TrainDataset/TrainGaitDataset"
+		self.testPath = path+"/TestDataset/TestGaitDataset"
+		self.srcPath = path+"/FilteredGaitDataset"
 		self.trainMatric = []
 		self.testMatric = []
 		self.p = p
-
 		temp = self.trainPath.split('/')
 		path = self.trainPath.replace(temp[len(temp)-1],'')
 
@@ -82,6 +81,12 @@ class RandomSelect:
 	def data_process(self):
 		personDirectorsPath = self.srcPath
 		personDirectors = self.listdir_nohidden(personDirectorsPath)
+		temp = []
+		for p in personDirectors:
+			temp.append(p)
+		sorted(temp,key= lambda x:int(x.replace("Person","")))
+		personDirectors = []
+		personDirectors = temp
 		for personDirector in personDirectors:
 			personDirectorPath = personDirectorsPath + '/' + personDirector
 			if not os.path.isdir(personDirectorPath):
@@ -157,17 +162,6 @@ class RandomSelect:
 				dstFile.write(point)
 		dstFile.close()
 
-srcPath = ["/Users/niko/Documents/KinectGaitScripts/Data/FilteredGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/Data/RawGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/RawGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/FilteredGaitDataset"]
-
-dstPath = ["/Users/niko/Documents/KinectGaitScripts/Data/FilteredGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestOnlyData/FilteredGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TrainDataset/TrainGaitDataset",
-		"/Users/niko/Documents/KinectGaitScripts/TestDataset/TestGaitDataset",]
-# dstPath = "/Users/niko/Documents/KinectGaitScripts/Data/convertedData/"
-
 if __name__ == '__main__':
-	rs = RandomSelect(srcPath[3],trainPath = dstPath[2],testPath = dstPath[3],p=0.7)
+	rs = RandomSelect()
 	rs.data_process()
