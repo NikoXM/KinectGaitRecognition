@@ -9,9 +9,11 @@ from PyQt4 import QtCore
 
 angle_descriptors = ['srkrar','srklal','slkrar','slklal','hrklal','hlkrar','krhlal','klhrar','arhlkl','alhrkr']
 
-class dynamicWindow(QtGui.QWidget):
+class DynamicWindow(QtGui.QWidget):
     def __init__(self):
-        super(dynamicWindow, self).__init__()
+        setWorkDir()
+        import ProcessLogic.dynamicAnalysis as da
+        super(DynamicWindow, self).__init__()
         self.initUI()
 
     def initUI(self):
@@ -161,6 +163,6 @@ class dynamicWindow(QtGui.QWidget):
         self.pbar.setValue(0)
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    ex = dynamicWindow()
+    ex = DynamicWindow()
     ex.show()
     app.exec_()

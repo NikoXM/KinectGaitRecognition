@@ -10,7 +10,7 @@ limb_descriptors  = ['neck','rshoulder','lshoulder','rarm','larm','rfarm','lfarm
 					'rcalf','lcalf','rfoot','lfoot','height']
 angle_descriptors = ['srkrar','srklal','slkrar','slklal','hrklal','hlkrar','krhlal','klhrar','arhlkl','alhrkr']
 
-class recognitionWindow(QtGui.QMainWindow):
+class RecognitionWindow(QtGui.QMainWindow):
     def __init__(self):
         super(recognitionWindow, self).__init__()
 

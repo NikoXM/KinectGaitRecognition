@@ -1,39 +1,17 @@
 #-*-coding:utf-8-*-
-
 import os
 import sys
 from PyQt4 import QtGui, QtCore
-import Experiment as exp
-import Practice as pra
+from Window import Window
 
-#Get Current Working Directory
-def setWorkDir(){
-    homdir = sys.path[0]
-    i = homdir.rfind('\\')
-    homdir = homdir[0:i]
-    sys.path.append(homdir)
-}
-
-import ProcessLogic.dynamicAnalysis as da
-
-class MainWindow(QtGui.QMainWindow):
-
+class MainWindow(Window):
     def __init__(self):
-        super(MainWindow, self).__init__()
-
-        exit = QtGui.QAction(QtGui.QIcon('icons/exit.png'), 'Exit', self)
-        exit.setShortcut('Ctrl+Q')
-        exit.setStatusTip('Exit application')
-        self.connect(exit, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
-        self.experiment = exp.Experiment()
-        self.practice = pra.Practice()
-        self.statusBar()
-
-        menubar = self.menuBar()
-        file = menubar.addMenu('&File')
-        file.addAction(exit)
+        super(MainWindow,self).__init__()
+        from ExperimentWindow import ExperimentWindow
+        from PracticeWindow import PracticeWindow
+        experimentWindow = ExperimentWindow()
+        practiceWindow = PracticeWindow()
         self.initUI()
-        
         
     def initUI(self):
         experimentButton = QtGui.QPushButton("Experimental Mode",self)
@@ -51,13 +29,8 @@ class MainWindow(QtGui.QMainWindow):
         self.setWindowTitle("Gait Analysis")
 
         self.resize(1000, 600)
-    def listdir_nohidden(self, path):
-        for f in os.listdir(path):
-            if not f.startswith('.'):
-                yield f
 
     def createDir(self):
-        homedir = os.getcwd()
         RawGaitDataFolder = homedir + "\RawGaitDataset"
         fileDir = self.listdir_nohidden(RawGaitDataFolder)
         listdir = []
@@ -68,12 +41,17 @@ class MainWindow(QtGui.QMainWindow):
         os.mkdir(personDir)
         
     def experimental(self):
-        self.experiment.show()
+        self.experimentWindow.show()
         
     def practical(self):
-        self.practice.show()
+        self.practiceWindow.show()
 
 if __name__ == "__main__":
+    import sys
+    homdir = sys.path[0]
+    i = homdir.rfind('\\')
+    homdir = homdir[0:i]
+    sys.path.append(homdir)
     app = QtGui.QApplication(sys.argv)
     ex = MainWindow()
     ex.show()

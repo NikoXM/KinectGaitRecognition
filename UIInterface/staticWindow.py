@@ -8,17 +8,15 @@ import dynamicAnalysis as da
 import staticAnalysis as sa
 import classifier as cl
 import os
-
+from Window import Window
 
 limb_descriptors = ['neck','rshoulder','lshoulder','rarm','larm','rfarm','lfarm',
 					'rhand','lhand','uspine','lspine','rhip','lhip','rthigh','lthigh',
 					'rcalf','lcalf','rfoot','lfoot','height']
 
-class staticWindow(QtGui.QWidget):
-
+class StaticWindow(Window):
     def __init__(self):
-        super(staticWindow, self).__init__()
-
+        super(StaticWindow, self).__init__()
         self.initUI()
     def initUI(self):
         self.selection = {}
@@ -239,6 +237,6 @@ class staticWindow(QtGui.QWidget):
         
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    ex = Example()
+    ex = SaticWindow()
     ex.show()
     app.exec_()

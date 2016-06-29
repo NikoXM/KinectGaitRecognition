@@ -3,32 +3,15 @@
 import os
 import sys
 import shutil
-from PyQt4 import QtGui, QtCore
-import dynamicAnalysis as da
-import recognitionWindow as rw
+from Window import Window
 
-class Practice(QtGui.QMainWindow):
+class PracticeWindow(Window):
     def __init__(self):
-        super(Practice, self).__init__()
-
-        exit = QtGui.QAction(QtGui.QIcon('icons/exit.png'), 'Exit', self)
-        exit.setShortcut('Ctrl+Q')
-        exit.setStatusTip('Exit application')
-        self.connect(exit, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
-
-        self.statusBar()
-
-        # exp1 = QtGui.QAction('Experiment1',self)
-        # self.connect(exp1,QtCore.SIGNAL('triggered()'),self.experiment1)
-
-        menubar = self.menuBar()
-        file = menubar.addMenu('&File')
-        # file.addAction(exp1)
-        file.addAction(exit)
-        
+        super(PracticeWindow, self).__init__()
         self.initUI()
 
     def initUI(self):
+        from PyQt4 import QtGui, QtCore
         dataInputButton = QtGui.QPushButton("Data Input",self)
         dataInputButton.resize(440,100)
         dataInputButton.move(30,100)
@@ -49,12 +32,9 @@ class Practice(QtGui.QMainWindow):
         self.setWindowTitle("Gait Analysis")
 
         self.resize(500, 800)
-        self.gaitRecognition = rw.recognitionWindow()
 
-    def listdir_nohidden(self, path):
-        for f in os.listdir(path):
-            if not f.startswith('.'):
-                yield f
+        from RecognitionWindow import RecognitionWindow
+        self.recognitionWindow = RecognitionWindow()
 
     def createDir(self):
         homedir = os.getcwd()
@@ -83,7 +63,7 @@ class Practice(QtGui.QMainWindow):
                 break
         if not isok:
             return
-        exePath = "C:\Users\Niko\Documents\BodyBasics-D2D\Debug\BodyBasics-D2D "
+        exePath = "C:\Users\Niko\Documents\BodyBasics-D2D\Debug\BodyBasics-D2D"
         homedir = os.getcwd()
         outputFilePath = homedir+"\\temp.txt"
         outputFile = open(outputFilePath,'w')
@@ -126,11 +106,13 @@ class Practice(QtGui.QMainWindow):
             return ""
         
     def gaitRecognitionPush(self):
-        self.gaitRecognition.show()
+        self.recognitionWindow.show()
+
     def showResultPush(self):
         return 0
+
 if __name__=="__main__":
     app = QtGui.QApplication(sys.argv)
-    ex = Practice()
+    ex = PracticeWindow()
     ex.show()
     sys.exit(app.exec_())

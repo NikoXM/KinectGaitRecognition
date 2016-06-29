@@ -3,36 +3,21 @@
 import os
 import sys
 from PyQt4 import QtGui, QtCore
-import staticWindow as sw
-import dynamicWindow as dw
+# import staticWindow as sw
+# import dynamicWindow as dw
+from Window import Window
 
-class Experiment(QtGui.QMainWindow):
-
+class ExperimentWindow(Window):
     def __init__(self):
-        super(Experiment, self).__init__()
-
-        exit = QtGui.QAction(QtGui.QIcon('icons/exit.png'), 'Exit', self)
-        exit.setShortcut('Ctrl+Q')
-        exit.setStatusTip('Exit application')
-        self.connect(exit, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
-
-        self.statusBar()
-
-        # exp1 = QtGui.QAction('Experiment1',self)
-        # self.connect(exp1,QtCore.SIGNAL('triggered()'),self.experiment1)
-
-        menubar = self.menuBar()
-        file = menubar.addMenu('&File')
-        # file.addAction(exp1)
-        file.addAction(exit)
-        
+        super(ExperimentWindow, self).__init__()
         self.initUI()
-
-        self.staticWindow = sw.staticWindow()
-        self.dynamicWindow = dw.dynamicWindow()
+        from StaticWindow import StaticWindow
+        from DynamicWindow import DynamicWindow
+        self.staticWindow = StaticWindow()
+        self.dynamicWindow = DynamicWindow()
+        
 
     def initUI(self):
-        
         staticAnalysisButton = QtGui.QPushButton("Static Analysis",self)
         staticAnalysisButton.resize(440,100)
         staticAnalysisButton.move(30,100)
@@ -53,6 +38,7 @@ class Experiment(QtGui.QMainWindow):
 
         self.resize(500, 700)
         QtGui.QInputDialog.activateWindow
+
     def listdir_nohidden(self, path):
         for f in os.listdir(path):
             if not f.startswith('.'):
@@ -60,6 +46,7 @@ class Experiment(QtGui.QMainWindow):
 
     def buttonClicked(self):
         sender = self.sender()
+        
         # if sender.text() == "Data Input":
         
         # self.statusBar().showMessage(sender.text() + ' was pressed')
@@ -89,6 +76,6 @@ class Experiment(QtGui.QMainWindow):
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
-    ex = Experiment()
+    ex = ExperimentWindow()
     ex.show()
     sys.exit(app.exec_())
