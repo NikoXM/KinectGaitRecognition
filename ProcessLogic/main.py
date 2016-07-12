@@ -1,20 +1,31 @@
-import armaFilter as af
-import dynamicAnalysis as da
-import staticAnalysis as sa
-import classifier as cl
-import randomSelect as rs
+from ArmaFilter import Filter
+from DynamicAnalyzer import DynamicAnalyzer
+from StaticAnalyzer import StaticAnalyzer
+from Classifier import Classifier
+from RandomSelect import RandomSelect
 import os
+import sys
 
 if __name__ == "__main__":
-	homedir = os.getcwd()
+	homedir = sys.path[0]
+	import platform
+	p = platform.platform().split('-')[0]
+	if p == "Windows":
+		seperator = "\\"
+	elif p == "Darwin":
+		seperator = "/"
+	i = homedir.rfind(seperator)
+	homedir = homedir[0:i]
+
 	print homedir
-	filt = af.Filter(homedir)
-	filt.data_process()
-	select = rs.RandomSelect(homedir)
+
+	filt = Filter(homedir)
+	filt.dataProcess()
+	select = RandomSelect(homedir)
 	select.data_process()
-	dy = da.DynamicAnalyzer(homedir)
+	dy = DynamicAnalyzer(homedir)
 	dy.data_process()
-	st = sa.StaticAnalyzer(homedir)
+	st = StaticAnalyzer(homedir)
 	st.data_process()
-	c = cl.Classifier(homedir)
+	c = Classifier(homedir)
 	c.data_process()

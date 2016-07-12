@@ -21,18 +21,18 @@ class Classifier:
 		self.testStaticList = []
 		self.testDynamicList= []
 		self.testList = []
-		self.static_result = []
-		self.dynamic_result = []
-		self.fusion_result = []
+		self.staticResult = []
+		self.dynamicResult = []
+		self.fusionResult = []
 
-		self.static_dis = []
-		self.dynamic_dis = []
+		self.staticDistance = []
+		self.dynamicDistance = []
 
-	def data_process(self):
-		self.static_classify()
-		self.dynamic_classify()
-		self.fusion_classify()
-		self.show_result()
+	def dataProcess(self):
+		self.staticClassify()
+		self.dynamicClassify()
+		self.fusionClassify()
+		self.showResult()
 
 	def clear(self):
 		self.testData = []
@@ -71,48 +71,48 @@ class Classifier:
 		testDataFile.close()
 
 	def static_classify(self):
-		self.read_static_data()
+		self.readStaticData()
 		#neigh = NearestNeighbors(n_neighbors = 2)
 		trainData = self.trainStaticData
 		testData = self.testStaticData
 		#neigh.fit(trainData)
 		#result = neigh.kneighbors(testData,return_distance=False)
-		result = self.knn_static(trainData,testData,2)
-		self.static_result = []
+		result = self.knnStatic(trainData,testData,2)
+		self.staticResult = []
 		for r in result:
-			count_list = {}
+			countList = {}
 			for item in r:
 				i = self.trainStaticList[item]
-				if count_list.has_key(i):
-					count_list[i] = count_list[i] + 1
+				if countList.has_key(i):
+					countList[i] = count_list[i] + 1
 				else:
-					count_list[i] = 1
+					countList[i] = 1
 			maximun = 0
-			for i in count_list:
-				if count_list[i] > maximun:
-					maximun = count_list[i]
+			for i in countList:
+				if countList[i] > maximun:
+					maximun = countList[i]
 					index = i
-			self.static_result.append(index)
-		# print "static result:", self.static_result
+			self.staticResult.append(index)
+		# print "static result:", self.staticResult
 		count = 0
-		for i in range(len(self.static_result)):
-			if self.static_result[i] == self.testStaticList[i]:
+		for i in range(len(self.staticResult)):
+			if self.staticResult[i] == self.testStaticList[i]:
 				count += 1
-		return count,float(count)/len(self.testStaticList),len(self.testStaticList),self.static_result
-		#print self.static_result
+		return count,float(count)/len(self.testStaticList),len(self.testStaticList),self.staticResult
+		#print self.staticResult
 	def knn_static(self,trainData,testData,n):
 		result = []
 		for testPsn in range(len(testData)):
-			dis_list = []
+			disList = []
 			mapper = {}
 			for trainPsn in range(len(trainData)):
 				dis = self.euclidian(testData[testPsn],trainData[trainPsn])
 				mapper[trainPsn] = dis
-				dis_list.append(dis)
-			dis_list = sorted(dis_list)
+				disList.append(dis)
+			disList = sorted(disList)
 			
 			temp = []
-			for i in dis_list[:n]:
+			for i in disList[:n]:
 				for j in mapper:
 					if mapper[j] == i:
 						temp.append(j)
@@ -131,11 +131,11 @@ class Classifier:
 			dis = np.sqrt(sum((x-y)**2))
 		return dis
 
-	def read_dynamic_data(self):
+	def readDynamicData(self):
 		trainPath = self.trainDynamicPath
 		testPath = self.testDynamicPath
-		trainDataFiles = self.listdir_nohidden(trainPath)
-		testDataFiles = self.listdir_nohidden(testPath)
+		trainDataFiles = self.listdirNohidden(trainPath)
+		testDataFiles = self.listdirNohidden(testPath)
 
 		trainFiles = []
 		for files in trainDataFiles:
@@ -227,7 +227,7 @@ class Classifier:
 		#result = neigh.kneighbors(testData,return_distance = False)
 		#result = []
 		result = self.knn_dynamic(trainData,testData,2)
-		self.dynamic_result = []
+		self.dynamicResult = []
 		
 		for r in result:
 			count_list = {}
@@ -242,15 +242,15 @@ class Classifier:
 				if count_list[i] > maximun:
 					maximun = count_list[i]
 					index = i
-			self.dynamic_result.append(index)
+			self.dynamicResult.append(index)
 		#print len(self.result)
-		# print self.dynamic_result
-		# print "dynamic result:",self.dynamic_result
+		# print self.dynamicResult
+		# print "dynamic result:",self.dynamicResult
 		count = 0
-		for i in range(len(self.dynamic_result)):
-			if self.dynamic_result[i] == self.testDynamicList[i]:
+		for i in range(len(self.dynamicResult)):
+			if self.dynamicResult[i] == self.testDynamicList[i]:
 				count += 1
-		return count,float(count)/len(self.testDynamicList),len(self.testDynamicList),self.dynamic_result
+		return count,float(count)/len(self.testDynamicList),len(self.testDynamicList),self.dynamicResult
 
 	def knn_dynamic(self,trainData,testData,n):
 		result = []
@@ -284,7 +284,7 @@ class Classifier:
 		#neigh.fit(trainData)
 		#result = neigh.kneighbors(testData,return_distance=False)
 		result = self.knn_fusion(trainDynamicData,testDynamicData,trainStaticData,testStaticData,2)
-		self.fusion_result = []
+		self.fusionResult = []
 		for r in result:
 			count_list = {}
 			for item in r:
@@ -298,13 +298,13 @@ class Classifier:
 				if count_list[i] > maximun:
 					maximun = count_list[i]
 					index = i
-			self.fusion_result.append(index)
-		# print "fusion result:", self.fusion_result
+			self.fusionResult.append(index)
+		# print "fusion result:", self.fusionResult
 		count = 0
-		for i in range(len(self.fusion_result)):
-			if self.fusion_result[i] == self.testStaticList[i]:
+		for i in range(len(self.fusionResult)):
+			if self.fusionResult[i] == self.testStaticList[i]:
 				count += 1
-		return count,float(count)/len(self.testStaticList),len(self.testStaticList),self.fusion_result
+		return count,float(count)/len(self.testStaticList),len(self.testStaticList),self.fusionResult
 
 	def knn_fusion(self,trainDynamicData,testDynamicData,trainStaticData,testStaticData,n):
 		result = []
@@ -353,22 +353,22 @@ class Classifier:
 	def show_result(self):
 #dynamic success number:
 		count = 0
-		for i in range(len(self.dynamic_result)):
-			if self.dynamic_result[i] == self.testDynamicList[i]:
+		for i in range(len(self.dynamicResult)):
+			if self.dynamicResult[i] == self.testDynamicList[i]:
 				count += 1
 		print "dynamic success:"
 		print count
 #static success number:
 		count = 0
-		for i in range(len(self.static_result)):
-			if self.static_result[i] == self.testStaticList[i]:
+		for i in range(len(self.staticResult)):
+			if self.staticResult[i] == self.testStaticList[i]:
 				count += 1
 		print "static success:"
 		print count
 #fusion success number:
 		count = 0
-		for i in range(len(self.fusion_result)):
-			if self.fusion_result[i] == self.testStaticList[i]:
+		for i in range(len(self.fusionResult)):
+			if self.fusionResult[i] == self.testStaticList[i]:
 				count += 1
 		print "fusion success:"
 		print count
@@ -432,4 +432,4 @@ class Classifier:
 
 if __name__ == "__main__":
 	classifier = Classifier()
-	classifier.data_process()
+	classifier.dataProcess()

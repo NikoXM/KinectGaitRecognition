@@ -9,53 +9,51 @@ import matplotlib.pyplot as plt
 from scipy.integrate import trapz
 from scipy.optimize import curve_fit
 import random as rd
+import platform
 
-wekaFilePath = "/Users/niko/Documents/KinectGaitScripts/TestOnlyData/WekaDataset/fourier.arff"
-
-def fourier_func_1(x, w, a0, a1, b1):
+def fourierFunction1(x, w, a0, a1, b1):
     return a0 + a1 * np.cos(x * w) + b1 * np.sin(x * w)
 
 
-def fourier_func_2(x, w, a0, a1, b1, a2, b2):
+def fourierFunction2(x, w, a0, a1, b1, a2, b2):
     return a0 + a1 * np.cos(x * w) + b1 * np.sin(x * w) + a2 * np.cos(2 * x * w) + b2 * np.sin(2 * x * w)
 
 
-def fourier_func_3(x, w, a0, a1, b1, a2, b2, a3, b3):
+def fourierFunction3(x, w, a0, a1, b1, a2, b2, a3, b3):
     return a0 + a1 * np.cos(x * w) + b1 * np.sin(x * w) + a2 * np.cos(2 * x * w) + b2 * np.sin(2 * x * w) + a3 * np.cos(
         3 * x * w) + b3 * np.sin(3 * x * w)
 
 
-def fourier_func_4(x, w, a0, a1, b1, a2, b2, a3, b3, a4, b4):
+def fourierFunction4(x, w, a0, a1, b1, a2, b2, a3, b3, a4, b4):
     return a0 + a1 * np.cos(x * w) + b1 * np.sin(x * w) + a2 * np.cos(2 * x * w) + b2 * np.sin(2 * x * w) + a3 * np.cos(
         3 * x * w) + b3 * np.sin(3 * x * w) + a4 * np.cos(4 * x * w) + b4 * np.sin(4 * x * w)
 
 
-def fourier_func_5(x, w, a0, a1, b1, a2, b2, a3, b3, a4, b4, a5, b5):
+def fourierFunction5(x, w, a0, a1, b1, a2, b2, a3, b3, a4, b4, a5, b5):
     return a0 + a1 * np.cos(x * w) + b1 * np.sin(x * w) + a2 * np.cos(2 * x * w) + b2 * np.sin(2 * x * w) + a3 * np.cos(
         3 * x * w) + b3 * np.sin(3 * x * w) + a4 * np.cos(4 * x * w) + b4 * np.sin(4 * x * w) + a5 * np.cos(
         5 * x * w) + b5 * np.sin(5 * x * w)
 
 
-def fourier_func_6(x, w, a0, a1, b1, a2, b2, a3, b3, a4, b4, a5, b5, a6, b6):
+def fourierFunction6(x, w, a0, a1, b1, a2, b2, a3, b3, a4, b4, a5, b5, a6, b6):
     return a0 + a1 * np.cos(x * w) + b1 * np.sin(x * w) + a2 * np.cos(2 * x * w) + b2 * np.sin(2 * x * w) + a3 * np.cos(
         3 * x * w) + b3 * np.sin(3 * x * w) + a4 * np.cos(4 * x * w) + b4 * np.sin(4 * x * w) + a5 * np.cos(
         5 * x * w) + b5 * np.sin(5 * x * w) + a6 * np.cos(6 * x * w) + b6 * np.sin(6 * x * w)
 
 
-def fourier_func_7(x, w, a0, a1, b1, a2, b2, a3, b3, a4, b4, a5, b5, a6, b6, a7, b7):
+def fourierFunction7(x, w, a0, a1, b1, a2, b2, a3, b3, a4, b4, a5, b5, a6, b6, a7, b7):
     return a0 + a1 * np.cos(x * w) + b1 * np.sin(x * w) + a2 * np.cos(2 * x * w) + b2 * np.sin(2 * x * w) + a3 * np.cos(
         3 * x * w) + b3 * np.sin(3 * x * w) + a4 * np.cos(4 * x * w) + b4 * np.sin(4 * x * w) + a5 * np.cos(
         5 * x * w) + b5 * np.sin(5 * x * w) + a6 * np.cos(6 * x * w) + b6 * np.sin(6 * x * w) + a7 * np.cos(
         7 * x * w) + b7 * np.sin(7 * x * w)
 
-
-def poly_func(x, a0, a1, a2, a3, a4, a5, a6, a7):
+def polyFunction(x, a0, a1, a2, a3, a4, a5, a6, a7):
     return a7 * x ** 7 + a6 * x ** 6 + a5 * x ** 5 + a4 * x ** 4 + a3 * x ** 3 + a2 * x ** 2 + a1 * x + a0
 
 class DynamicAnalyzer:
     'this class is to fitting the curve of walk'
 
-    def __init__(self,path,angle_list={}):
+    def __init__(self,path,angleList={}):
         self.gaitData = gd.GaitData()
         self.points = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
         self.srcTrainPath = path + "/Dataset/TrainDataset/TrainGaitDataset"
@@ -73,22 +71,22 @@ class DynamicAnalyzer:
         # self.wekaFile.write("@attribute identification numeric\n@data\n")
         self.frequecy = []
         self.N = None
-        self.angles_map = {
-                "srkrar":[self.gaitData.shoulder_right,self.gaitData.knee_right,self.gaitData.ankle_right],
-                "srklal":[self.gaitData.shoulder_right,self.gaitData.knee_left,self.gaitData.ankle_left],
-                "slkrar":[self.gaitData.shoulder_left,self.gaitData.knee_right,self.gaitData.ankle_right],
-                "slklal":[self.gaitData.shoulder_left,self.gaitData.knee_left,self.gaitData.ankle_left],
-                "hrklal":[self.gaitData.hip_right,self.gaitData.knee_left,self.gaitData.ankle_left],
-                "hlkrar":[self.gaitData.hip_left,self.gaitData.knee_right,self.gaitData.ankle_right],
-                "krhlal":[self.gaitData.knee_right,self.gaitData.hip_left,self.gaitData.ankle_left],
-                "klhrar":[self.gaitData.knee_left,self.gaitData.hip_right,self.gaitData.ankle_right],
-                "arhlkl":[self.gaitData.ankle_right,self.gaitData.hip_left,self.gaitData.knee_left],
-                "alhrkr":[self.gaitData.ankle_left,self.gaitData.hip_right,self.gaitData.knee_right],
-                "hcsckl":[self.gaitData.hip_center,self.gaitData.shoulder_center,self.gaitData.knee_left],
-                "hcsckr":[self.gaitData.hip_center,self.gaitData.shoulder_center,self.gaitData.knee_right],
+        self.anglesMap = {
+                "srkrar":[self.gaitData.shoulderRight,self.gaitData.kneeRight,self.gaitData.ankleRight],
+                "srklal":[self.gaitData.shoulderRight,self.gaitData.kneeLeft,self.gaitData.ankleLeft],
+                "slkrar":[self.gaitData.shoulderLeft,self.gaitData.kneeRight,self.gaitData.ankleRight],
+                "slklal":[self.gaitData.shoulderLeft,self.gaitData.kneeLeft,self.gaitData.ankleLeft],
+                "hrklal":[self.gaitData.hipRight,self.gaitData.kneeLeft,self.gaitData.ankleLeft],
+                "hlkrar":[self.gaitData.hipLeft,self.gaitData.kneeRight,self.gaitData.ankleRight],
+                "krhlal":[self.gaitData.kneeRight,self.gaitData.hipLeft,self.gaitData.ankleLeft],
+                "klhrar":[self.gaitData.kneeLeft,self.gaitData.hipRight,self.gaitData.ankleRight],
+                "arhlkl":[self.gaitData.ankleRight,self.gaitData.hipLeft,self.gaitData.kneeLeft],
+                "alhrkr":[self.gaitData.ankleLeft,self.gaitData.hipRight,self.gaitData.kneeRight],
+                "hcsckl":[self.gaitData.hipCenter,self.gaitData.shoulderCenter,self.gaitData.kneeLeft],
+                "hcsckr":[self.gaitData.hipCenter,self.gaitData.shoulderCenter,self.gaitData.kneeRight],
                 }
 
-        self.angle_list = angle_list
+        self.angleList = angleList
 
         if(os.path.exists(self.dstTrainPath)):
             shutil.rmtree(self.dstTrainPath)
@@ -125,7 +123,7 @@ class DynamicAnalyzer:
     # 			s[i] = 0
     # 	file.close()
 
-    def listdir_nohidden(self, path):
+    def listdirNohidden(self, path):
         for f in os.listdir(path):
             if not f.startswith('.'):
                 yield f
@@ -133,23 +131,23 @@ class DynamicAnalyzer:
     def clear(self):
         self.points = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
 
-    def data_process(self):
+    def dataProcess(self):
         self.mode = "Train Dynamic:"
-        self.dynamic_analysis(self.srcTrainPath,self.dstTrainPath)
+        self.dynamicAnalysis(self.srcTrainPath,self.dstTrainPath)
 
         self.mode = "Test  Dynamic:"
-        self.dynamic_analysis(self.srcTestPath,self.dstTestPath)
+        self.dynamicAnalysis(self.srcTestPath,self.dstTestPath)
 
-    def dynamic_analysis(self,srcPath,dstPath):
+    def dynamicAnalysis(self,srcPath,dstPath):
         # The first step is to read data from files
         personDirectorsPath = srcPath
-        personDirectors = self.listdir_nohidden(personDirectorsPath)
+        personDirectors = self.listdirNohidden(personDirectorsPath)
         for personDirector in personDirectors:
             personDirectorPath = personDirectorsPath + '/' + personDirector
             if not os.path.isdir(personDirectorPath):
 				continue
             print self.mode,personDirector
-            personFiles = self.listdir_nohidden(personDirectorPath)
+            personFiles = self.listdirNohidden(personDirectorPath)
             # caculate the number of nth file
             # fPoint = 0
             for personFile in personFiles:
@@ -186,10 +184,10 @@ class DynamicAnalyzer:
                 self.points[seg].append(point)
         person.close()
 
-    def set_ndfit(self, nd):
+    def setNdfit(self, nd):
         self.ndfit = nd
 
-    def curve_fitting(self, x, angle):
+    def curveFitting(self, x, angle):
         # p0 = np.ones(2*(self.ndfit+1))
         # p0 = [0,0,0,0,0,0.010101584095144]
         # p0 = [0]*(2*(self.ndfit+1) - 1)
@@ -198,45 +196,45 @@ class DynamicAnalyzer:
         # p0 = np.array(p0)
         p0 = 0.01 * np.random.normal(size=2 * (self.ndfit + 1))
         if self.ndfit == 1:
-            return curve_fit(fourier_func_1, x, angle, p0, maxfev=5000)
+            return curve_fit(fourierFunction1, x, angle, p0, maxfev=5000)
         elif self.ndfit == 2:
-            return curve_fit(fourier_func_2, x, angle, p0, maxfev=5000)
+            return curve_fit(fourierFunction2, x, angle, p0, maxfev=5000)
         elif self.ndfit == 3:
-            return curve_fit(fourier_func_3, x, angle, p0, maxfev=5000)
+            return curve_fit(fourierFunction3, x, angle, p0, maxfev=5000)
         elif self.ndfit == 4:
-            return curve_fit(fourier_func_4, x, angle, p0, maxfev=5000)
+            return curve_fit(fourierFunction4, x, angle, p0, maxfev=5000)
         elif self.ndfit == 5:
-            return curve_fit(fourier_func_5, x, angle, p0, maxfev=5000)
+            return curve_fit(fourierFunction5, x, angle, p0, maxfev=5000)
         elif self.ndfit == 6:
-            return curve_fit(fourier_func_6, x, angle, p0, maxfev=5000)
+            return curve_fit(fourierFunction6, x, angle, p0, maxfev=5000)
         elif self.ndfit == 7:
-            return curve_fit(fourier_func_7, x, angle, p0, maxfev=5000)
+            return curve_fit(fourierFunction7, x, angle, p0, maxfev=5000)
         elif self.ndfit == -1:
-            return curve_fit(poly_func, x, angle)
+            return curve_fit(polyFunction, x, angle)
         else:
             print "size must be between 1 and 7"
             return False
 
-    def apply_function(self, xdata, arg):
+    def applyFunction(self, xdata, arg):
         if self.ndfit == 1:
-            return fourier_func_1(xdata, arg[0], arg[1], arg[2], arg[3])
+            return fourierFunction1(xdata, arg[0], arg[1], arg[2], arg[3])
         elif self.ndfit == 2:
-            return fourier_func_2(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5])
+            return fourierFunction2(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5])
         elif self.ndfit == 3:
-            return fourier_func_3(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7])
+            return fourierFunction3(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7])
         elif self.ndfit == 4:
-            return fourier_func_4(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9])
+            return fourierFunction4(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9])
         elif self.ndfit == 5:
-            return fourier_func_5(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9],
+            return fourierFunction5(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9],
                                   arg[10], arg[11])
         elif self.ndfit == 6:
-            return fourier_func_6(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9],
+            return fourierFunction6(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9],
                                   arg[10], arg[11], arg[12], arg[13])
         elif self.ndfit == 7:
-            return fourier_func_7(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9],
+            return fourierFunction7(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9],
                                   arg[10], arg[11], arg[12], arg[13], arg[14], arg[15])
         elif self.ndfit == -1:
-            return poly_func(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7])
+            return polyFunction(xdata, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7])
         else:
             print "size error"
 
@@ -251,10 +249,10 @@ class DynamicAnalyzer:
         a1 = data[joint[1]] - data[joint[0]]
         a2 = data[joint[2]] - data[joint[0]]
         modulo = self.getModulo(a1) * self.getModulo(a2)
-        dot_multi = a1 * a2
-        dot_multi = dot_multi[:, 0] + dot_multi[:, 1] + dot_multi[:, 2]
-        cos_theta = (dot_multi) / modulo
-        angle = np.arccos(cos_theta)
+        dotMulti = a1 * a2
+        dotMulti = dotMulti[:, 0] + dotMulti[:, 1] + dotMulti[:, 2]
+        cosTheta = (dotMulti) / modulo
+        angle = np.arccos(cosTheta)
         return angle
 
     # extra periods from the vedio sequence
@@ -299,9 +297,9 @@ class DynamicAnalyzer:
     def periodsFilter(self, periods):
         i = 0
         while i < len(periods):
-            p_max = max(periods[i])
-            p_min = min(periods[i])
-            if (abs(periods[i][0] - periods[i][len(periods[i]) - 1]) >= (9. / 10.) * (p_max - p_min)):
+            pMax = max(periods[i])
+            pMin = min(periods[i])
+            if (abs(periods[i][0] - periods[i][len(periods[i]) - 1]) >= (9. / 10.) * (pMax - pMin)):
                 del periods[i]
                 i -= 1
             i += 1
@@ -326,9 +324,9 @@ class DynamicAnalyzer:
     # print periods
 
     def drawAngleCurve(self,dstPath):
-        for m in self.angle_list:
-            angle = self.calculateAngle(self.angles_map[m])
-            self.meanfilter(angle,17)
+        for m in self.angleList:
+            angle = self.calculateAngle(self.anglesMap[m])
+            self.meanFilter(angle,17)
             periods = self.extractPeriods(angle)
             periods = self.periodsFilter(periods)
             # fourier curve fitting
@@ -348,7 +346,7 @@ class DynamicAnalyzer:
                 trainData.write(str(self.gaitData.getId()) + '\n')
                 trainData.close()
                 continue
-            self.set_ndfit(-1)
+            self.setNdfit(-1)
             # p = periods[0]
             # calciulate average
             minimun = 100
@@ -365,7 +363,7 @@ class DynamicAnalyzer:
             #print period
             x = np.arange(len(period))
 
-            popt, pcov = self.curve_fitting(x, np.array(period))
+            popt, pcov = self.curveFitting(x, np.array(period))
             # ydata = self.apply_function(x,popt)
             # # plt.plot(x,np.array(p))
             # plt.plot(x,ydata)
@@ -421,37 +419,37 @@ class DynamicAnalyzer:
         for i in range(len(lists)):
             avg += limbSpeedsData[i]
         avg = avg / size
-        self.meanfilter(avg, 21)
+        self.meanFilter(avg, 21)
         #plt.plot(np.arange(size), avg.tolist())
         #plt.show()
 
     # the angle seems not to work so well
     def drawDirection(self):
         data = np.array(self.points)
-        x_new = data[self.gaitData.hip_left] - data[self.gaitData.hip_right]
-        y_new = data[self.gaitData.shoulder_center] - data[self.gaitData.hip_center]
-        z_new = np.cross(x_new, y_new)
-        cos_theta = z_new[:, 2] / self.getModulo(z_new)
-        self.medianfilter(cos_theta, 21)
+        xNew = data[self.gaitData.hipLeft] - data[self.gaitData.hipRight]
+        yNew = data[self.gaitData.shoulderCenter] - data[self.gaitData.hipCenter]
+        zNew = np.cross(xNew, yNew)
+        cosTheta = zNew[:, 2] / self.getModulo(zNew)
+        self.medianFilter(cosTheta, 21)
         #plt.plot(np.arange(len(cos_theta.tolist())), cos_theta.tolist())
         #plt.show()
 
     def drawPath(self):
         return 0
 
-    def meanfilter(self, array, size):
+    def meanFilter(self, array, size):
         if size % 2 == 0:
             print "size must be odd"
             return
         pad = (size - 1) / 2
-        array_copy = np.copy(array)
+        arrayCopy = np.copy(array)
         for i in range(pad, len(array) - pad - 1):
-            sum = array_copy[i]
+            sum = arrayCopy[i]
             for j in range(1, pad + 1):
-                sum += array_copy[i - j] + array_copy[i + j]
+                sum += arrayCopy[i - j] + arrayCopy[i + j]
             array[i] = sum / size
 
-    def medianfilter(self, array, size):
+    def medianFilter(self, array, size):
         if size % 2 == 0:
             print "size must be odd"
             return
@@ -493,6 +491,14 @@ class DynamicAnalyzer:
 if __name__ == "__main__":
     # train
     lists = ['srkrar','srklal']
-    homedir = os.getcwd()
+    import sys
+    homedir = sys.path[0]
+    p = platform.platform().split('-')[0]
+    if p == "Windows":
+        seperator = "\\"
+    elif p == "Darwin":
+        seperator = "/"
+    i = homedir.rfind(seperator)
+    homedir = homedir[0:i]
     d = DynamicAnalyzer(homedir,lists)
-    d.data_process()
+    d.dataProcess()
