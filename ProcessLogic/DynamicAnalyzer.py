@@ -4,12 +4,12 @@ import os
 import string
 import shutil
 import numpy as np
-import GaitData as gd
 import matplotlib.pyplot as plt
-from scipy.integrate import trapz
-from scipy.optimize import curve_fit
 import random as rd
 import platform
+from scipy.integrate import trapz
+from scipy.optimize import curve_fit
+from GaitData import GaitData
 
 def fourierFunction1(x, w, a0, a1, b1):
     return a0 + a1 * np.cos(x * w) + b1 * np.sin(x * w)
@@ -54,7 +54,7 @@ class DynamicAnalyzer:
     'this class is to fitting the curve of walk'
 
     def __init__(self,path,angleList={}):
-        self.gaitData = gd.GaitData()
+        self.gaitData = GaitData()
         self.points = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
         self.srcTrainPath = path + "/Dataset/TrainDataset/TrainGaitDataset"
         self.dstTrainPath = path + "/Dataset/TrainDataset/TrainDynamicDataset"

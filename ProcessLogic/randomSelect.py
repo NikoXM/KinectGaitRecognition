@@ -3,7 +3,7 @@ import string
 import shutil
 import random as rd
 import numpy as np
-import GaitData as gd
+from GaitData import GaitData
 
 joint_descriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left', 'Elbow-Right', 'Elbow-Left', 'Wrist-Right', 'Wrist-Left',
 			   'Hand-Right', 'Hand-Left', 'Spine', 'Hip-centro', 'Hip-Right', 'Hip-Left', 'Knee-Right', 'Knee-Left',
@@ -11,7 +11,7 @@ joint_descriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left
 
 class RandomSelect:
 	def __init__(self,path="/Users/niko/Documents/KinectGaitRecognition",p=0.7):
-		self.gaitData = gd.GaitData()
+		self.gaitData = GaitData()
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 		self.trainPath = path+"/Dataset/TrainDataset/TrainGaitDataset"
 		self.testPath = path+"/Dataset/TestDataset/TestGaitDataset"
