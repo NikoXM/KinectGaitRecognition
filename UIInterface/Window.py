@@ -17,17 +17,13 @@ class Window(QtGui.QMainWindow):
         menubar = self.menuBar()
         file = menubar.addMenu('&File')
         file.addAction(exit)
-        self.initUI()
-    
-    def initUI(self):
-        self.setWindowTitle("Window")
-        self.resize(1000, 600)
     
     def listdirNohidden(self, path):
+        files = []
         for f in os.listdir(path):
             if not f.startswith('.'):
-                yield f
-        
+                files.append(f)
+        return files
 
 if __name__=="__main__":
     app = QtGui.QApplication(sys.argv)
