@@ -1,4 +1,3 @@
-
 import os
 from PyQt4 import QtGui, QtCore
 class Window(QtGui.QMainWindow):
@@ -24,7 +23,7 @@ class Window(QtGui.QMainWindow):
         self.setWindowTitle("Window")
         self.resize(1000, 600)
     
-    def listdir_nohidden(self, path):
+    def listdirNohidden(self, path):
         for f in os.listdir(path):
             if not f.startswith('.'):
                 yield f

@@ -3,19 +3,16 @@
 import os
 import sys
 from PyQt4 import QtGui, QtCore
-# import staticWindow as sw
-# import dynamicWindow as dw
 from Window import Window
 
 class ExperimentWindow(Window):
     def __init__(self):
         super(ExperimentWindow, self).__init__()
-        self.initUI()
         from StaticWindow import StaticWindow
         from DynamicWindow import DynamicWindow
         self.staticWindow = StaticWindow()
         self.dynamicWindow = DynamicWindow()
-        
+        self.initUI()
 
     def initUI(self):
         staticAnalysisButton = QtGui.QPushButton("Static Analysis",self)
@@ -39,17 +36,8 @@ class ExperimentWindow(Window):
         self.resize(500, 700)
         QtGui.QInputDialog.activateWindow
 
-    def listdir_nohidden(self, path):
-        for f in os.listdir(path):
-            if not f.startswith('.'):
-                yield f
-
     def buttonClicked(self):
         sender = self.sender()
-        
-        # if sender.text() == "Data Input":
-        
-        # self.statusBar().showMessage(sender.text() + ' was pressed')
 
     def createDir(self):
         homedir = os.getcwd()
@@ -63,14 +51,11 @@ class ExperimentWindow(Window):
         os.mkdir(personDir)
         
     def dataStaticAnalysis(self):
-        # text, ok = QtGui.QInputDialog.getText(self, 'Input Dialog','Enter your name:')
-        # if ok:
-        #     self.label.setText(str(text))
         self.staticWindow.show()
-
         
     def dataDynamicAnalysis(self):
         self.dynamicWindow.show()
+
     def fusionAnalysis(self):
         return 0
 

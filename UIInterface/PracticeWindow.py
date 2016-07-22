@@ -4,14 +4,17 @@ import os
 import sys
 import shutil
 from Window import Window
+from PyQt4 import QtGui, QtCore
 
 class PracticeWindow(Window):
     def __init__(self):
         super(PracticeWindow, self).__init__()
+        from RecognitionWindow import RecognitionWindow
+        self.recognitionWindow = RecognitionWindow()
         self.initUI()
 
     def initUI(self):
-        from PyQt4 import QtGui, QtCore
+        
         dataInputButton = QtGui.QPushButton("Data Input",self)
         dataInputButton.resize(440,100)
         dataInputButton.move(30,100)
@@ -31,10 +34,7 @@ class PracticeWindow(Window):
         self.statusBar().showMessage('Ready')
         self.setWindowTitle("Gait Analysis")
 
-        self.resize(500, 800)
-
-        from RecognitionWindow import RecognitionWindow
-        self.recognitionWindow = RecognitionWindow()
+        self.resize(500, 800) 
 
     def createDir(self):
         homedir = os.getcwd()

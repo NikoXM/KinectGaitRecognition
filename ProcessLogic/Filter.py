@@ -4,7 +4,7 @@ import shutil
 import numpy as np
 import GaitData as gd
 
-joint_descriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left', 'Elbow-Right', 'Elbow-Left', 'Wrist-Right', 'Wrist-Left',
+jointDescriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left', 'Elbow-Right', 'Elbow-Left', 'Wrist-Right', 'Wrist-Left',
 			   'Hand-Right', 'Hand-Left', 'Spine', 'Hip-centro', 'Hip-Right', 'Hip-Left', 'Knee-Right', 'Knee-Left',
 			   'Ankle-Right', 'Ankle-Left', 'Foot-Right', 'Foot-Left']
 
@@ -25,12 +25,12 @@ class Filter:
 	def clear(self):
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 
-	def listdir_nohidden(self,path):
+	def listdirNohidden(self,path):
 		for f in os.listdir(path):
 			if not f.startswith('.'):
 				yield f
 
-	def read_data(self,personFilePath):
+	def readData(self,personFilePath):
 		person = open(personFilePath)
 		personData = person.readlines()
 		if len(personData) == 0:
@@ -46,30 +46,30 @@ class Filter:
 				self.points[seg].append(point)
 		#print self.points
 
-	def data_process(self):
+	def dataProcess(self):
 		personDirectorsPath = self.srcPath
-		personDirectors = self.listdir_nohidden(personDirectorsPath)
+		personDirectors = self.listdirNohidden(personDirectorsPath)
 		for personDirector in personDirectors:
 			print "Filtering:",personDirector
 			personDirectorPath = personDirectorsPath + '/' + personDirector
-			personFiles = self.listdir_nohidden(personDirectorPath)
+			personFiles = self.listdirNohidden(personDirectorPath)
 			for personFile in personFiles:
 				personFilePath = personDirectorPath + '/' + personFile
 				self.clear()
-				self.read_data(personFilePath)
+				self.readData(personFilePath)
 				self.armaFilter()
 				writePersonDirectorPath = self.dstPath +'/' + personDirector + '/'
 				if(os.path.exists(writePersonDirectorPath)):
-					self.write_data(writePersonDirectorPath+personFile)
+					self.writeData(writePersonDirectorPath+personFile)
 				else:
 					os.mkdir(writePersonDirectorPath)
-					self.write_data(writePersonDirectorPath+personFile)
+					self.writeData(writePersonDirectorPath+personFile)
 
-	def arma3D(self,past_values, future_values,ai):
+	def arma3D(self,pastValues, futureValues,ai):
 		values= []
-		for v in future_values:
+		for v in futureValues:
 			values.append(v)
-		for v in past_values:
+		for v in pastValues:
 			values.append(v)
 		avgmeanX = 0
 		avgmeanY = 0
@@ -86,13 +86,13 @@ class Filter:
 		size = len(self.points[0])
 		for key in range(self.n+1, size - self.n):
 			for limb in range(len(self.points)):
-				past_values = []
-				future_values = []
+				pastValues = []
+				futureValues = []
 
 				for i in range(1,self.n+1):
-					past_values.append(self.points[limb][key-i])
-					future_values.append(self.points[limb][key+i])
-				result = self.arma3D(past_values, future_values, 1/(2*float(self.n)))
+					pastValues.append(self.points[limb][key-i])
+					futureValues.append(self.points[limb][key+i])
+				result = self.arma3D(pastValues, futureValues, 1/(2*float(self.n)))
 				self.points[limb][key] = result
 
 #this function use the physic law
@@ -100,14 +100,14 @@ class Filter:
 		data = np.array(self.points)
 		shape = np.shape(data)
 
-	def write_data(self,dstPersonFile):
+	def writeData(self,dstPersonFile):
 		dstFile = open(dstPersonFile,'w')
 		points = np.array(self.points)
 
 		length = len(points[0])
 		for frame in range(length):
 			for limb in range(0,len(points)):
-				point = joint_descriptors[limb]+ ";"
+				point = jointDescriptors[limb]+ ";"
 				for i in range(2):
 					point += str(points[limb][frame][i]) + ";"
 				point += str(points[limb][frame][2]) + '\n'
@@ -116,4 +116,4 @@ class Filter:
 
 if __name__ == "__main__":
 	flt = Filter(srcPath[2],dstPath[1],10)
-	flt.data_process()
+	flt.dataProcess()

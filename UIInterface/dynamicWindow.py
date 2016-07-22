@@ -1,24 +1,23 @@
 import sys
 import os
-import dynamicAnalysis as da
-import classifier as cl
-import armaFilter as af
-import randomSelect as rs
+from DynamicAnalyzer import DynamicAnalyzer
+from Classifier import Classifier
+from Filter import Filter
+from RandomSelector import RandomSelector
 from PyQt4 import QtGui
 from PyQt4 import QtCore
+from Window import Window
 
-angle_descriptors = ['srkrar','srklal','slkrar','slklal','hrklal','hlkrar','krhlal','klhrar','arhlkl','alhrkr']
+angleDescriptors = ['srkrar','srklal','slkrar','slklal','hrklal','hlkrar','krhlal','klhrar','arhlkl','alhrkr']
 
-class DynamicWindow(QtGui.QWidget):
+class DynamicWindow(Window):
     def __init__(self):
-        setWorkDir()
-        import ProcessLogic.dynamicAnalysis as da
         super(DynamicWindow, self).__init__()
         self.initUI()
 
     def initUI(self):
         self.selection = {}
-        for i in angle_descriptors:
+        for i in angleDescriptors:
             self.selection[i] = 0
 
         self.setWindowTitle('Select Dynamic Parameter')
@@ -144,23 +143,22 @@ class DynamicWindow(QtGui.QWidget):
         for p in self.selection:
             if self.selection[p] == 1:
                 angle_list.append(p)
-
         homedir = os.getcwd()
         # filt = af.Filter(homedir)
         # filt.data_process()
         self.pbar.setValue(25)
-        # select = rs.RandomSelect(homedir)
-        # select.data_process()
+        select = RandomSelector(homedir)
+        select.dataProcess()
         self.pbar.setValue(50)
-        dt = da.DynamicAnalyzer(homedir,angle_list)
-        dt.data_process()
+        dt = DynamicAnalyzer(homedir,angle_list)
+        dt.dataProcess()
         self.pbar.setValue(75)
-        c = cl.Classifier(homedir)
-        count,rate,total = c.dynamic_classify()
+        c = Classifier(homedir)
+        count,rate,total,result = c.dynamicClassify()
         self.pbar.setValue(100)
-
         reply = QtGui.QMessageBox.question(self, 'Dynamic Analysis Result',"Total number is %d"%(total)+"\nCorrect number is %d"%(count)+"\nCorrect rate is %f"%(100*rate)+"%", QtGui.QMessageBox.Yes)
         self.pbar.setValue(0)
+
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
     ex = DynamicWindow()
