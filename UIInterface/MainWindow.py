@@ -1,6 +1,13 @@
 #-*-coding:utf-8-*-
 import os
 import sys
+homdir = sys.path[0]
+i = homdir.rfind('\\')
+homdir = homdir[0:i]
+sys.path.append(homdir)
+sys.path.append(homdir+"\\ProcessLogic")
+print homdir
+
 from PyQt4 import QtGui, QtCore
 from Window import Window
 
@@ -9,8 +16,8 @@ class MainWindow(Window):
         super(MainWindow,self).__init__()
         from ExperimentWindow import ExperimentWindow
         from PracticeWindow import PracticeWindow
-        experimentWindow = ExperimentWindow()
-        practiceWindow = PracticeWindow()
+        self.experimentWindow = ExperimentWindow()
+        self.practiceWindow = PracticeWindow()
         self.initUI()
         
     def initUI(self):

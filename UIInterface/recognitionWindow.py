@@ -1,31 +1,20 @@
-from PyQt4 import QtGui, QtCore
-import staticAnalysis as sa
-import dynamicAnalysis as da
 import os
 import shutil
-import classifier as cl
+from PyQt4 import QtGui, QtCore
+from StaticAnalyzer import StaticAnalyzer
+from DynamicAnalyzer import DynamicAnalyzer
+from Classifier import Classifier
+from Window import Window
 
-limb_descriptors  = ['neck','rshoulder','lshoulder','rarm','larm','rfarm','lfarm',
+limbDescriptors  = ['neck','rshoulder','lshoulder','rarm','larm','rfarm','lfarm',
 					'rhand','lhand','uspine','lspine','rhip','lhip','rthigh','lthigh',
 					'rcalf','lcalf','rfoot','lfoot','height']
-angle_descriptors = ['srkrar','srklal','slkrar','slklal','hrklal','hlkrar','krhlal','klhrar','arhlkl','alhrkr']
+angleDescriptors = ['srkrar','srklal','slkrar','slklal','hrklal','hlkrar','krhlal','klhrar','arhlkl','alhrkr']
 
-class RecognitionWindow(QtGui.QMainWindow):
+class RecognitionWindow(Window):
     def __init__(self):
-        super(recognitionWindow, self).__init__()
-
-        exit = QtGui.QAction(QtGui.QIcon('icons/exit.png'), 'Exit', self)
-        exit.setShortcut('Ctrl+Q')
-        exit.setStatusTip('Exit application')
-        self.connect(exit, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
-        
-        self.statusBar()
-
-        menubar = self.menuBar()
-        file = menubar.addMenu('&File')
-        file.addAction(exit)
+        super(RecognitionWindow, self).__init__()
         self.initUI()
-        
         
     def initUI(self):
 
@@ -74,11 +63,6 @@ class RecognitionWindow(QtGui.QMainWindow):
                 return pm[0]
         return str(i)
 
-    def listdir_nohidden(self, path):
-        for f in os.listdir(path):
-            if not f.startswith('.'):
-                yield f
-
     def staticPush(self):
         if self.staticRecognition.isChecked():
             self.dynamicRecognition.setCheckState(0)
@@ -101,20 +85,20 @@ class RecognitionWindow(QtGui.QMainWindow):
             return
 
         homdir = os.getcwd()
-        trainGaitPath = homdir+"\\TrainDataset\\TrainGaitDataset"
+        trainGaitPath = homdir+"\\Dataset\\TrainDataset\\TrainGaitDataset"
         if (os.path.exists(trainGaitPath)):
             shutil.rmtree(trainGaitPath)
             os.mkdir(trainGaitPath)
         else:
             os.mkdir(trainGaitPath)
-        filterFilePath = homdir+"\\FilteredGaitDataset"
+        filterFilePath = homdir+"\\Dataset\\FilteredGaitDataset"
         files = os.listdir(filterFilePath)
         for f in files:
             fpath = filterFilePath + "\\"+f
             dstGaitPath = trainGaitPath+"\\"+f
             shutil.copytree(fpath,dstGaitPath)
 
-        testGaitPath = homdir+"\\TestDataset\\TestGaitDataset"
+        testGaitPath = homdir+"\\Dataset\\TestDataset\\TestGaitDataset"
         if (os.path.exists(testGaitPath)):
             shutil.rmtree(testGaitPath)
             os.mkdir(testGaitPath)
@@ -128,45 +112,44 @@ class RecognitionWindow(QtGui.QMainWindow):
         # outputFile.close()
         # os.system(exePath+outputFilePath)
 
-        dstOutputPersonPath = homdir+"\\TestDataset\\TestGaitDataset\\Person001"
+        dstOutputPersonPath = homdir+"\\Dataset\\TestDataset\\TestGaitDataset\\Person001"
         os.mkdir(dstOutputPersonPath)
         dstOutputPath = dstOutputPersonPath+"\\1.txt"
         shutil.copy(outputFilePath,dstOutputPath)
 
-
         self.pbar.setValue(50)
         if self.staticRecognition.isChecked():
             self.pbar.setValue(75)
-            st = sa.StaticAnalyzer(homdir,limb_descriptors)
-            st.data_process()
-            c = cl.Classifier(homdir)
-            count,rate,total,result = c.static_classify()
+            st = StaticAnalyzer(homdir,limbDescriptors)
+            st.dataProcess()
+            c = Classifier(homdir)
+            count,rate,total,result = c.staticClassify()
             self.pbar.setValue(100)
             name = self.findName(result[0])
             reply = QtGui.QMessageBox.question(self, 'Static Analysis Result',"This is "+name, QtGui.QMessageBox.Yes)
             
         elif self.dynamicRecognition.isChecked():
             self.pbar.setValue(75)
-            dy = da.DynamicAnalyzer(homdir,angle_descriptors)
-            dy.data_process()
-            c = cl.Classifier(homdir)
-            count,rate,total = c.dynamic_classify()
+            dy = DynamicAnalyzer(homdir,angleDescriptors)
+            dy.dataProcess()
+            c = Classifier(homdir)
+            count,rate,total = c.dynamicClassify()
             self.pbar.setValue(100)
             reply = QtGui.QMessageBox.question(self, 'Dynamic Analysis Result',"Total number is %d"%(total)+"\nCorrect number is %d"%(count)+"\nCorrect rate is %f"%(100*rate)+"%", QtGui.QMessageBox.Yes)
         else:
             self.pbar.setValue(75)
-            dy = da.DynamicAnalyzer(homdir,angle_descriptors)
-            dy.data_process()
-            st = sa.StaticAnalyzer(homdir,limb_descriptors)
-            st.data_process()
-            c = cl.Classifier(homdir)
-            count,rate,total = c.fusion_classify()
+            dy = DynamicAnalyzer(homdir,angleDescriptors)
+            dy.dataProcess()
+            st = StaticAnalyzer(homdir,limbDescriptors)
+            st.dataProcess()
+            c = Classifier(homdir)
+            count,rate,total = c.fusionClassify()
             self.pbar.setValue(100)
             reply = QtGui.QMessageBox.question(self, 'Fusion Analysis Result',"Total number is %d"%(total)+"\nCorrect number is %d"%(count)+"\nCorrect rate is %f"%(100*rate)+"%", QtGui.QMessageBox.Yes)
 
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
-    ex = recognitionWindow()
+    ex = RecognitionWindow()
     ex.show()
     sys.exit(app.exec_())

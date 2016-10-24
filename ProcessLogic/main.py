@@ -1,10 +1,14 @@
-from ArmaFilter import Filter
+from Filter import Filter
 from DynamicAnalyzer import DynamicAnalyzer
 from StaticAnalyzer import StaticAnalyzer
 from Classifier import Classifier
-from RandomSelect import RandomSelect
+from RandomSelector import RandomSelector
 import os
 import sys
+
+limbDescriptors  = ['neck','rshoulder','lshoulder','rarm','larm','rfarm','lfarm',
+					'rhand','lhand','uspine','lspine','rhip','lhip','rthigh','lthigh',
+					'rcalf','lcalf','rfoot','lfoot','height']
 
 if __name__ == "__main__":
 	homedir = sys.path[0]
@@ -21,11 +25,13 @@ if __name__ == "__main__":
 
 	filt = Filter(homedir)
 	filt.dataProcess()
-	select = RandomSelect(homedir)
-	select.data_process()
-	dy = DynamicAnalyzer(homedir)
-	dy.data_process()
-	st = StaticAnalyzer(homedir)
-	st.data_process()
+	select = RandomSelector(homedir)
+	select.dataProcess()
+
+	lists = ['srkrar','srklal']
+	dy = DynamicAnalyzer(homedir,lists)
+	dy.dataProcess()
+	st = StaticAnalyzer(homedir,limbDescriptors)
+	st.dataProcess()
 	c = Classifier(homedir)
-	c.data_process()
+	c.dataProcess()

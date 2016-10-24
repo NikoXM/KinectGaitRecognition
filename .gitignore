@@ -1,2 +1,4 @@
-Dataset/*
+/Dataset/*
 *.pyc
+*.txt
+Dataset/

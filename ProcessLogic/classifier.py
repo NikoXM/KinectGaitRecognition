@@ -1,9 +1,8 @@
 import os
 import numpy as np
 import warnings
-warnings.filterwarnings("ignore")
 
-def poly_func(x, a1, a2, a3, a4, a5, a6, a7):
+def polyFunction(x, a1, a2, a3, a4, a5, a6, a7):
     return a7 * x ** 7 + a6 * x ** 6 + a5 * x ** 5 + a4 * x ** 4 + a3 * x ** 3 + a2 * x ** 2 + a1 * x
 
 class Classifier:
@@ -37,12 +36,12 @@ class Classifier:
 	def clear(self):
 		self.testData = []
 
-	def listdir_nohidden(self,path):
+	def listdirNohidden(self,path):
 		for f in os.listdir(path):
 			if not f.startswith('.'):
 				yield f
 
-	def read_static_data(self):
+	def readStaticData(self):
 		trainPath = self.trainStaticPath
 		testPath = self.testStaticPath
 		trainDataFile = open(trainPath+"/static.txt")
@@ -70,7 +69,7 @@ class Classifier:
 		trainDataFile.close()
 		testDataFile.close()
 
-	def static_classify(self):
+	def staticClassify(self):
 		self.readStaticData()
 		#neigh = NearestNeighbors(n_neighbors = 2)
 		trainData = self.trainStaticData
@@ -84,7 +83,7 @@ class Classifier:
 			for item in r:
 				i = self.trainStaticList[item]
 				if countList.has_key(i):
-					countList[i] = count_list[i] + 1
+					countList[i] = countList[i] + 1
 				else:
 					countList[i] = 1
 			maximun = 0
@@ -100,7 +99,7 @@ class Classifier:
 				count += 1
 		return count,float(count)/len(self.testStaticList),len(self.testStaticList),self.staticResult
 		#print self.staticResult
-	def knn_static(self,trainData,testData,n):
+	def knnStatic(self,trainData,testData,n):
 		result = []
 		for testPsn in range(len(testData)):
 			disList = []
@@ -208,11 +207,10 @@ class Classifier:
 		self.trainDynamicData = [[r[col] for r in trainDynamicData] for col in range(len(trainDynamicData[0]))] 
 		self.testDynamicData = [[r[col] for r in testDynamicData] for col in range(len(testDynamicData[0]))]
 
-	def dynamic_classify(self):
-		self.read_dynamic_data()
+	def dynamicClassify(self):
+		self.readDynamicData()
 		trainData = np.array(self.trainDynamicData)
 		trainData = trainData.reshape(trainData.shape[0],-1)
-
 		testData = np.array(self.testDynamicData)
 		testData = testData.reshape(testData.shape[0], -1)
 		# print testData
@@ -226,21 +224,21 @@ class Classifier:
 		#neigh.fit(trainData)
 		#result = neigh.kneighbors(testData,return_distance = False)
 		#result = []
-		result = self.knn_dynamic(trainData,testData,2)
+		result = self.knnDynamic(trainData,testData,2)
 		self.dynamicResult = []
 		
 		for r in result:
-			count_list = {}
+			countList = {}
 			for item in r:
 				i = self.trainDynamicList[item]
-				if count_list.has_key(i):
-					count_list[i] = count_list[i] + 1
+				if countList.has_key(i):
+					countList[i] = countList[i] + 1
 				else:
-					count_list[i] = 1
+					countList[i] = 1
 			maximun = 0
-			for i in count_list:
-				if count_list[i] > maximun:
-					maximun = count_list[i]
+			for i in countList:
+				if countList[i] > maximun:
+					maximun = countList[i]
 					index = i
 			self.dynamicResult.append(index)
 		#print len(self.result)
@@ -252,28 +250,28 @@ class Classifier:
 				count += 1
 		return count,float(count)/len(self.testDynamicList),len(self.testDynamicList),self.dynamicResult
 
-	def knn_dynamic(self,trainData,testData,n):
+	def knnDynamic(self,trainData,testData,n):
 		result = []
 		for testPsn in range(len(testData)):
-			dis_list = []
+			disList = []
 			mapper = {}
 			for trainPsn in range(len(trainData)):
 				dis = self.dtw(testData[testPsn],trainData[trainPsn])
 				mapper[trainPsn] = dis
-				dis_list.append(dis)
-			dis_list = sorted(dis_list)
+				disList.append(dis)
+			disList = sorted(disList)
 			
 			temp = []
-			for i in dis_list[:n]:
+			for i in disList[:n]:
 				for j in mapper:
 					if mapper[j] == i:
 						temp.append(j)
 			result.append(temp)
 		return result
 
-	def fusion_classify(self):
-		self.read_static_data()
-		self.read_dynamic_data()
+	def fusionClassify(self):
+		self.readStaticData()
+		self.readDynamicData()
 		#neigh = NearestNeighbors(n_neighbors = 2)
 		trainStaticData = self.trainStaticData
 		testStaticData = self.testStaticData
@@ -283,20 +281,20 @@ class Classifier:
 		testDynamicData = testDynamicData.reshape(testDynamicData.shape[0], -1)
 		#neigh.fit(trainData)
 		#result = neigh.kneighbors(testData,return_distance=False)
-		result = self.knn_fusion(trainDynamicData,testDynamicData,trainStaticData,testStaticData,2)
+		result = self.knnFusion(trainDynamicData,testDynamicData,trainStaticData,testStaticData,2)
 		self.fusionResult = []
 		for r in result:
-			count_list = {}
+			countList = {}
 			for item in r:
 				i = self.trainStaticList[item]
-				if count_list.has_key(i):
-					count_list[i] = count_list[i] + 1
+				if countList.has_key(i):
+					countList[i] = countList[i] + 1
 				else:
-					count_list[i] = 1
+					countList[i] = 1
 			maximun = 0
-			for i in count_list:
-				if count_list[i] > maximun:
-					maximun = count_list[i]
+			for i in countList:
+				if countList[i] > maximun:
+					maximun = countList[i]
 					index = i
 			self.fusionResult.append(index)
 		# print "fusion result:", self.fusionResult
@@ -306,51 +304,51 @@ class Classifier:
 				count += 1
 		return count,float(count)/len(self.testStaticList),len(self.testStaticList),self.fusionResult
 
-	def knn_fusion(self,trainDynamicData,testDynamicData,trainStaticData,testStaticData,n):
+	def knnFusion(self,trainDynamicData,testDynamicData,trainStaticData,testStaticData,n):
 		result = []
-		train_num = len(trainDynamicData)
-		test_num = len(testDynamicData)
+		trainNum = len(trainDynamicData)
+		testNum = len(testDynamicData)
 
-		dynamic_list = []
-		static_list = []
-		for testPsn in range(test_num):
-			d_list = []
-			s_list = []
-			for trainPsn in range(train_num):
-				dynamic_dis = self.dtw(testDynamicData[testPsn],trainDynamicData[trainPsn])
-				static_dis = self.euclidian(testStaticData[testPsn],trainStaticData[trainPsn])
+		dynamicList = []
+		staticList = []
+		for testPsn in range(testNum):
+			dList = []
+			sList = []
+			for trainPsn in range(trainNum):
+				dynamicDistance = self.dtw(testDynamicData[testPsn],trainDynamicData[trainPsn])
+				staticDistance = self.euclidian(testStaticData[testPsn],trainStaticData[trainPsn])
 				# mapper[trainPsn] = dis
-				d_list.append(dynamic_dis)
-				s_list.append(static_dis)
-			dynamic_list.append(d_list)
-			static_list.append(s_list)
-		d_max = max([max(i) for i in dynamic_list])
-		d_min = min([min(i) for i in dynamic_list])
-		s_max = max([max(i) for i in static_list])
-		s_min = min([min(i) for i in static_list])
+				dList.append(dynamicDistance)
+				sList.append(staticDistance)
+			dynamicList.append(dList)
+			staticList.append(sList)
+		dMax = max([max(i) for i in dynamicList])
+		dMin = min([min(i) for i in dynamicList])
+		sMax = max([max(i) for i in staticList])
+		sMin = min([min(i) for i in staticList])
 
-		d_data = np.array(dynamic_list)
-		s_data = np.array(static_list)
-		d_data = d_data/(d_max-d_min)
-		s_data = s_data/(s_max-s_min)
+		dData = np.array(dynamicList)
+		sData = np.array(staticList)
+		dData = dData/(dMax-dMin)
+		sData = sData/(sMax-sMin)
 
-		dis = (d_data + s_data).tolist()
+		dis = (dData + sData).tolist()
 
 		for psn in dis:
 			mapper = {}
-			temp_list = psn
+			tempList = psn
 			for i in range(len(psn)):
 				mapper[i] = psn[i]
-			temp_list = sorted(temp_list)
-			temp_buffer = []
-			for i in temp_list[:n]:
+			tempList = sorted(tempList)
+			tempBuffer = []
+			for i in tempList[:n]:
 				for j in mapper:
 					if mapper[j] == i:
-						temp_buffer.append(j)
-			result.append(temp_buffer)
+						tempBuffer.append(j)
+			result.append(tempBuffer)
 		return result
 
-	def show_result(self):
+	def showResult(self):
 #dynamic success number:
 		count = 0
 		for i in range(len(self.dynamicResult)):
@@ -381,13 +379,13 @@ class Classifier:
 		dist = 0
 		for i in range(len(xs)):
 			xdata = np.arange(30)
-			ytrainData = poly_func(xdata,xs[i][0],xs[i][1],xs[i][2],xs[i][3],xs[i][4],xs[i][5],xs[i][6])
-			ytestData = poly_func(xdata,ys[i][0],ys[i][1],ys[i][2],ys[i][3],ys[i][4],ys[i][5],ys[i][6])
-			dist += self.dtw_single(ytrainData,ytestData)
+			ytrainData = polyFunction(xdata,xs[i][0],xs[i][1],xs[i][2],xs[i][3],xs[i][4],xs[i][5],xs[i][6])
+			ytestData = polyFunction(xdata,ys[i][0],ys[i][1],ys[i][2],ys[i][3],ys[i][4],ys[i][5],ys[i][6])
+			dist += self.dtwSingle(ytrainData,ytestData)
 		#print "calciulateing..."
 		return dist
 
-	def dtw_single(self,x, y):
+	def dtwSingle(self,x, y):
 		# print x.shape
 		# print y.shape
 

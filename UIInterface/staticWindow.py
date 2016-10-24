@@ -1,16 +1,16 @@
 import sys
+import os
 from PyQt4 import QtGui
 from PyQt4 import QtCore
-import staticAnalysis as sa
-import randomSelect as rs
-import armaFilter as af
-import dynamicAnalysis as da
-import staticAnalysis as sa
-import classifier as cl
-import os
+from Filter import Filter
 from Window import Window
+from StaticAnalyzer import StaticAnalyzer
+from RandomSelector import RandomSelector
+from DynamicAnalyzer import DynamicAnalyzer
+from StaticAnalyzer import StaticAnalyzer
+from Classifier import Classifier
 
-limb_descriptors = ['neck','rshoulder','lshoulder','rarm','larm','rfarm','lfarm',
+limbDescriptors = ['neck','rshoulder','lshoulder','rarm','larm','rfarm','lfarm',
 					'rhand','lhand','uspine','lspine','rhip','lhip','rthigh','lthigh',
 					'rcalf','lcalf','rfoot','lfoot','height']
 
@@ -18,9 +18,10 @@ class StaticWindow(Window):
     def __init__(self):
         super(StaticWindow, self).__init__()
         self.initUI()
+
     def initUI(self):
         self.selection = {}
-        for i in limb_descriptors:
+        for i in limbDescriptors:
             self.selection[i] = 0
 
         self.setGeometry(300, 300, 250, 150)
@@ -32,9 +33,9 @@ class StaticWindow(Window):
         self.timer = QtCore.QBasicTimer()
         self.step = 0
         
-        self.rshoulder = QtGui.QCheckBox('Right Shoulder', self)
+        self.rshoulder = QtGui.QCheckBox("Right Shoulder", self)
         self.rshoulder.move(30,100)
-        self.lshoulder = QtGui.QCheckBox('Left Shoulder', self)
+        self.lshoulder = QtGui.QCheckBox("Left Shoulder", self)
         self.lshoulder.move(300,100)
         self.rarm = QtGui.QCheckBox('Right Arm', self)
         self.rarm.move(30,150)
@@ -74,7 +75,6 @@ class StaticWindow(Window):
         self.height.move(300,550)
         
         self.neck.setFocusPolicy(QtCore.Qt.NoFocus)
-        # self.neck.toggle()
         
         self.connect(self.rarm, QtCore.SIGNAL('stateChanged(int)'),self.rarmPush)
         self.connect(self.larm, QtCore.SIGNAL('stateChanged(int)'),self.larmPush)
@@ -106,12 +106,10 @@ class StaticWindow(Window):
         self.cancelButton.move(300,650)
 
         self.connect(self.confirmButton,QtCore.SIGNAL('clicked()'),self.confirmPush)
-        
         self.connect(self.cancelButton,QtCore.SIGNAL('clicked()'), QtCore.SLOT('close()'))
-        
-        self.resize(550,800)
-
+        self.resize(600,800)
         self.text = "Please select the limbs:"
+
     def rarmPush(self,value):
         if self.rarm.isChecked():
             self.selection["rarm"] = 1
@@ -214,25 +212,24 @@ class StaticWindow(Window):
             self.selection["height"] = 0
     
     def confirmPush(self):
-        limb_list = []
+        limbList = []
         for p in self.selection:
             if self.selection[p] == 1:
-                limb_list.append(p)
+                limbList.append(p)
         self.pbar.setValue(0)
         homedir = os.getcwd()
-        filt = af.Filter(homedir)
-        filt.data_process()
+        filt = Filter(homedir)
+        filt.dataProcess()
         self.pbar.setValue(25)
-        select = rs.RandomSelect(homedir)
-        select.data_process()
+        select = RandomSelector(homedir)
+        select.dataProcess()
         self.pbar.setValue(50)
-        st = sa.StaticAnalyzer(homedir,limb_list)
-        st.data_process()
+        st = StaticAnalyzer(homedir,limbList)
+        st.dataProcess()
         self.pbar.setValue(75)
-        c = cl.Classifier(homedir)
-        count,rate,total = c.static_classify()
+        c = Classifier(homedir)
+        count,rate,total,result = c.staticClassify()
         self.pbar.setValue(100)
-
         reply = QtGui.QMessageBox.question(self, 'Static Analysis Result',"Total number is %d"%(total)+"\nCorrect number is %d"%(count)+"\nCorrect rate is %f"%(100*rate)+"%", QtGui.QMessageBox.Yes)
         
 if __name__ == '__main__':

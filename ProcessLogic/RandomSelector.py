@@ -5,11 +5,11 @@ import random as rd
 import numpy as np
 from GaitData import GaitData
 
-joint_descriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left', 'Elbow-Right', 'Elbow-Left', 'Wrist-Right', 'Wrist-Left',
+jointDescriptors = ['Head', 'Shoulder-Center', 'Shoulder-Right', 'Shoulder-Left', 'Elbow-Right', 'Elbow-Left', 'Wrist-Right', 'Wrist-Left',
 			   'Hand-Right', 'Hand-Left', 'Spine', 'Hip-centro', 'Hip-Right', 'Hip-Left', 'Knee-Right', 'Knee-Left',
 			   'Ankle-Right', 'Ankle-Left', 'Foot-Right', 'Foot-Left']
 
-class RandomSelect:
+class RandomSelector:
 	def __init__(self,path="/Users/niko/Documents/KinectGaitRecognition",p=0.7):
 		self.gaitData = GaitData()
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
@@ -38,10 +38,11 @@ class RandomSelect:
 			os.mkdir(path)
 		os.mkdir(self.testPath)
 
-	def listdir_nohidden(self,path):
+	def listdirNohidden(self,path):
 		for f in os.listdir(path):
 			if not f.startswith('.'):
 				yield f
+
 	def clear(self):
 		self.points = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 
@@ -78,9 +79,9 @@ class RandomSelect:
 		trainFile.close()
 		testFile.close()
 
-	def data_process(self):
+	def dataProcess(self):
 		personDirectorsPath = self.srcPath
-		personDirectors = self.listdir_nohidden(personDirectorsPath)
+		personDirectors = self.listdirNohidden(personDirectorsPath)
 		temp = []
 		for p in personDirectors:
 			temp.append(p)
@@ -92,7 +93,7 @@ class RandomSelect:
 			if not os.path.isdir(personDirectorPath):
 				continue
 			print "Random Select:",personDirector
-			personFiles = self.listdir_nohidden(personDirectorPath)
+			personFiles = self.listdirNohidden(personDirectorPath)
 			trainPoint = 0
 			testPoint = 0
 			tempList = []
@@ -107,34 +108,34 @@ class RandomSelect:
 			for personFile in trainFiles:
 				personFilePath = personDirectorPath + '/' + personFile
 				self.clear()
-				self.read_data(personFilePath)
+				self.readData(personFilePath)
 				#self.filter()
 				trainPoint += 1
 				if(os.path.exists(writePersonDirectorPath)):
-					self.write_data(writePersonDirectorPath+personFile)
+					self.writeData(writePersonDirectorPath+personFile)
 				else:
 					os.mkdir(writePersonDirectorPath)
-					self.write_data(writePersonDirectorPath+personFile)
+					self.writeData(writePersonDirectorPath+personFile)
 			#test
 			writePersonDirectorPath = self.testPath +'/' + personDirector + '/'
 			for personFile in testFiles:
 				personFilePath = personDirectorPath + '/' + personFile
 				self.clear()
-				self.read_data(personFilePath)
+				self.readData(personFilePath)
 				#self.filter()
 				writePersonDirectorPath = self.testPath +'/' + personDirector + '/'
 				testPoint += 1
 				if(os.path.exists(writePersonDirectorPath)):
-					self.write_data(writePersonDirectorPath+personFile)
+					self.writeData(writePersonDirectorPath+personFile)
 				else:
 					os.mkdir(writePersonDirectorPath)
-					self.write_data(writePersonDirectorPath+personFile)
+					self.writeData(writePersonDirectorPath+personFile)
 
 			self.trainMatric.append(trainPoint)
 			self.testMatric.append(testPoint)
 			self.writeSparseMatric()
 
-	def read_data(self,personFilePath):
+	def readData(self,personFilePath):
 		person = open(personFilePath)
 		personData = person.readlines()
 		if len(personData) == 0:
@@ -149,13 +150,13 @@ class RandomSelect:
 				self.points[seg].append(point)
 		person.close()
 
-	def write_data(self,dstPersonFile):
+	def writeData(self,dstPersonFile):
 		dstFile = open(dstPersonFile,'w')
 		points = np.array(self.points)
 		length = len(points[0])
 		for frame in range(length):
 			for limb in range(0,len(points)):
-				point = joint_descriptors[limb]+ ";"
+				point = jointDescriptors[limb]+ ";"
 				for i in range(2):
 					point += str(points[limb][frame][i]) + ";"
 				point += str(points[limb][frame][2]) + '\n'
@@ -163,5 +164,5 @@ class RandomSelect:
 		dstFile.close()
 
 if __name__ == '__main__':
-	rs = RandomSelect()
-	rs.data_process()
+	rs = RandomSelector()
+	rs.dataProcess()
