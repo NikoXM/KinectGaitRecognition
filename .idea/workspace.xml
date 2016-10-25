@@ -1,157 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6c6e2a66-bdb6-4e80-bcf2-2e231cd3a346" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person001/2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person002/2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person005/5.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person007/5.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person009/2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person010/3.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person001/2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person002/2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person005/5.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person007/5.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person009/2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person010/3.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person001/1.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person002/3.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person005/3.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person007/1.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person009/3.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person010/2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person001/1.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person002/3.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person005/3.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person007/1.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person009/3.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person010/2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ProcessLogic/dynamicAnalysis.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ProcessLogic/staticAnalysis.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.vscode/tasks.json" afterPath="$PROJECT_DIR$/.vscode/tasks.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person001/1.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person001/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person001/2.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person001/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person001/3.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person001/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person001/4.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person001/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person001/5.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person001/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person002/1.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person002/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person002/2.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person002/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person002/3.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person002/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person002/4.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person002/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/1.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/2.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/3.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/4.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/5.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/6.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person003/6.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person004/1.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person004/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person004/2.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person004/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person004/4.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person004/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person004/5.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person004/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person005/2.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person005/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person005/4.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person005/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person005/5.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person005/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person006/1.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person006/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person006/3.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person006/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person006/4.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person006/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person006/5.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person006/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person007/1.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person007/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person007/2.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person007/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person007/3.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person007/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person007/4.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person007/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person007/5.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person007/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person008/1.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person008/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person008/2.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person008/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person008/3.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person008/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person008/4.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person008/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person008/5.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person008/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person009/2.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person009/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person009/3.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person009/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person009/4.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person009/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person009/5.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person009/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person010/1.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person010/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person010/2.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person010/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person010/3.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person010/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person010/5.txt" afterPath="$PROJECT_DIR$/Dataset/FilteredGaitDataset/Person010/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person003/1.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person003/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person003/2.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person003/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person004/5.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person004/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person006/1.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person006/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person008/5.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestGaitDataset/Person008/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person003/1.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person003/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person003/2.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person003/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person004/5.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person004/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person006/1.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person006/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person008/5.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/Person008/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/static.txt" afterPath="$PROJECT_DIR$/Dataset/TestDataset/TestStaticDataset/static.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person001/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person001/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person001/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person001/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person001/5.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person001/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person002/1.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person002/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person002/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person002/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person003/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person003/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person003/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person003/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person003/5.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person003/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person003/6.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person003/6.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person004/1.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person004/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person004/2.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person004/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person004/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person004/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person005/2.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person005/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person005/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person005/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person006/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person006/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person006/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person006/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person006/5.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person006/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person007/2.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person007/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person007/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person007/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person007/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person007/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person008/1.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person008/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person008/2.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person008/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person008/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person008/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person008/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person008/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person009/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person009/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person009/5.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person009/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person010/1.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person010/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person010/5.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainGaitDataset/Person010/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person001/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person001/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person001/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person001/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person001/5.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person001/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person002/1.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person002/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person002/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person002/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person003/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person003/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person003/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person003/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person003/5.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person003/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person003/6.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person003/6.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person004/1.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person004/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person004/2.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person004/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person004/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person004/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person004/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person004/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person005/1.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person005/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person005/2.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person005/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person005/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person005/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person006/2.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person006/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person006/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person006/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person006/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person006/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person006/5.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person006/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person007/2.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person007/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person007/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person007/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person007/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person007/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person008/1.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person008/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person008/2.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person008/2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person008/3.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person008/3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person008/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person008/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person009/1.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person009/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person009/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person009/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person009/5.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person009/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person010/1.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person010/1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person010/4.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person010/4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person010/5.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/Person010/5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/static.txt" afterPath="$PROJECT_DIR$/Dataset/TrainDataset/TrainStaticDataset/static.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProcessLogic/GaitData.py" afterPath="$PROJECT_DIR$/ProcessLogic/GaitData.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProcessLogic/classifier.py" afterPath="$PROJECT_DIR$/ProcessLogic/classifier.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProcessLogic/main.py" afterPath="$PROJECT_DIR$/ProcessLogic/main.py" />
-    </list>
+    <list default="true" id="6c6e2a66-bdb6-4e80-bcf2-2e231cd3a346" name="Default" comment="" />
     <ignored path="KinectGaitRecognition.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -162,7 +12,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
@@ -171,20 +20,7 @@
     <favorites_list name="KinectGaitRecognition" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ArmaFilter.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ProcessLogic/ArmaFilter.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -205,10 +41,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="13" />
-    <option name="y" value="24" />
-    <option name="width" value="1400" />
-    <option name="height" value="783" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -266,8 +102,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -302,6 +136,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -488,14 +324,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="13" y="24" width="1400" height="783" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20884699" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15052083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24945612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2746988" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -541,16 +377,7 @@
     <entry file="file://$PROJECT_DIR$/CreateDirc.py" />
     <entry file="file://$PROJECT_DIR$/classifier.py" />
     <entry file="file://$PROJECT_DIR$/fourierModeling.py" />
-    <entry file="file://$PROJECT_DIR$/ProcessLogic/ArmaFilter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ProcessLogic/ArmaFilter.py" />
   </component>
   <component name="masterDetails">
     <states>

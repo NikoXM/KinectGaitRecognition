@@ -13,7 +13,7 @@ from Window import Window
 
 class MainWindow(Window):
     def __init__(self):
-        super(MainWindow,self).__init__()
+        super(MainWindow,self).__init__() 
         from ExperimentWindow import ExperimentWindow
         from PracticeWindow import PracticeWindow
         self.experimentWindow = ExperimentWindow()
