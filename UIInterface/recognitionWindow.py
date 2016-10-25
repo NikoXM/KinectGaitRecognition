@@ -85,20 +85,20 @@ class RecognitionWindow(Window):
             return
 
         homdir = os.getcwd()
-        trainGaitPath = homdir+"\\TrainDataset\\TrainGaitDataset"
+        trainGaitPath = homdir+"\\Dataset\\TrainDataset\\TrainGaitDataset"
         if (os.path.exists(trainGaitPath)):
             shutil.rmtree(trainGaitPath)
             os.mkdir(trainGaitPath)
         else:
             os.mkdir(trainGaitPath)
-        filterFilePath = homdir+"\\FilteredGaitDataset"
+        filterFilePath = homdir+"\\Dataset\\FilteredGaitDataset"
         files = os.listdir(filterFilePath)
         for f in files:
             fpath = filterFilePath + "\\"+f
             dstGaitPath = trainGaitPath+"\\"+f
             shutil.copytree(fpath,dstGaitPath)
 
-        testGaitPath = homdir+"\\TestDataset\\TestGaitDataset"
+        testGaitPath = homdir+"\\Dataset\\TestDataset\\TestGaitDataset"
         if (os.path.exists(testGaitPath)):
             shutil.rmtree(testGaitPath)
             os.mkdir(testGaitPath)
@@ -112,7 +112,7 @@ class RecognitionWindow(Window):
         # outputFile.close()
         # os.system(exePath+outputFilePath)
 
-        dstOutputPersonPath = homdir+"\\TestDataset\\TestGaitDataset\\Person001"
+        dstOutputPersonPath = homdir+"\\Dataset\\TestDataset\\TestGaitDataset\\Person001"
         os.mkdir(dstOutputPersonPath)
         dstOutputPath = dstOutputPersonPath+"\\1.txt"
         shutil.copy(outputFilePath,dstOutputPath)
@@ -121,8 +121,8 @@ class RecognitionWindow(Window):
         if self.staticRecognition.isChecked():
             self.pbar.setValue(75)
             st = StaticAnalyzer(homdir,limbDescriptors)
-            st.data_process()
-            c = cl.Classifier(homdir)
+            st.dataProcess()
+            c = Classifier(homdir)
             count,rate,total,result = c.staticClassify()
             self.pbar.setValue(100)
             name = self.findName(result[0])
@@ -131,7 +131,7 @@ class RecognitionWindow(Window):
         elif self.dynamicRecognition.isChecked():
             self.pbar.setValue(75)
             dy = DynamicAnalyzer(homdir,angleDescriptors)
-            dy.data_process()
+            dy.dataProcess()
             c = Classifier(homdir)
             count,rate,total = c.dynamicClassify()
             self.pbar.setValue(100)

@@ -38,8 +38,8 @@ class PracticeWindow(Window):
 
     def createDir(self):
         homedir = os.getcwd()
-        RawGaitDataFolder = homedir + "\RawGaitDataset"
-        fileDir = self.listdir_nohidden(RawGaitDataFolder)
+        RawGaitDataFolder = homedir + "\Dataset\RawGaitDataset"
+        fileDir = self.listdirNohidden(RawGaitDataFolder)
         listdir = []
         for p in fileDir:
             listdir.append(p)
@@ -63,38 +63,42 @@ class PracticeWindow(Window):
                 break
         if not isok:
             return
-        exePath = "C:\Users\Niko\Documents\BodyBasics-D2D\Debug\BodyBasics-D2D"
+        exePath = "C:\Users\Niko\Documents\BodyBasics-D2D\Debug\BodyBasics-D2D "
         homedir = os.getcwd()
         outputFilePath = homedir+"\\temp.txt"
+        print "outputFilePath: " + outputFilePath
         outputFile = open(outputFilePath,'w')
         outputFile.close()
+        #os.system(exePath)
         os.system(exePath+outputFilePath)
         
         personMapFile = open(homedir+"\\PersonMap.txt",'r')
         persons = personMapFile.readlines()
         personMapFile.close()
         isExisted = False
+
+        nameId = -1
         for p in persons:
             p = p.split(" ")
             if p[0] == name:
                 nameId = p[1]
                 isExisted = True
+                break
         if not isExisted:
+            print("person not exisist")
             nameId = self.createDir()
             personMapFile = open(homedir+"\\PersonMap.txt",'a')
             personMapFile.write(name+" "+str(nameId)+"\n")
             personMapFile.close()
             personFile = "Person"+"%0*d"%(3,int(nameId))
         else:
-            personFile = "Person"+"%0*d"%(3,int(p[1]))
+            print "nameId: " + nameId
+            personFile = "Person"+"%0*d"%(3,int(nameId))
         
-        writePath = homedir+"\\RawGaitDataset\\"+personFile
-        files = self.listdir_nohidden(writePath)
-        file_list = []
-        for f in files:
-            file_list.append(f)
-        fileId = len(file_list)+1
-
+        writePath = homedir+"\\Dataset\\RawGaitDataset\\" + personFile
+        print "writePath: " + writePath
+        fileList = self.listdirNohidden(writePath)
+        fileId = len(fileList)+1
         filePath = writePath +"\\" +str(fileId)+".txt"
         shutil.move(outputFilePath,filePath)
         

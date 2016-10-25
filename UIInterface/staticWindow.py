@@ -33,9 +33,9 @@ class StaticWindow(Window):
         self.timer = QtCore.QBasicTimer()
         self.step = 0
         
-        self.rshoulder = QtGui.QCheckBox('Right Shoulder', self)
+        self.rshoulder = QtGui.QCheckBox("Right Shoulder", self)
         self.rshoulder.move(30,100)
-        self.lshoulder = QtGui.QCheckBox('Left Shoulder', self)
+        self.lshoulder = QtGui.QCheckBox("Left Shoulder", self)
         self.lshoulder.move(300,100)
         self.rarm = QtGui.QCheckBox('Right Arm', self)
         self.rarm.move(30,150)
@@ -107,7 +107,7 @@ class StaticWindow(Window):
 
         self.connect(self.confirmButton,QtCore.SIGNAL('clicked()'),self.confirmPush)
         self.connect(self.cancelButton,QtCore.SIGNAL('clicked()'), QtCore.SLOT('close()'))
-        self.resize(550,800)
+        self.resize(600,800)
         self.text = "Please select the limbs:"
 
     def rarmPush(self,value):
